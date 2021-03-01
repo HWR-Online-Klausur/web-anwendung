@@ -1,12 +1,20 @@
 const express = require('express');
 const app = express();
 
+const { uploadJSON } = require('./jsonRead');
+
 const port = 3000;
 
+app.use(express.static(__dirname + "/static"));
+
+
 app.get('/', (req, res) => {
-    res.send(`<html><head><title>HWR Online Klausur</title></head><body><h2>Willkommen zum Online Klausur-System Kick-Off!</h2></body></html>`);
+    res.send();
 })
 
+app.post('/jsonRead',uploadJSON);
+
+
 app.listen(port, () => {
-    console.log('Der Server wurde gestartet!');
+    console.log(`Der Server wurde gestartet! http://localhost:${port}`);
 })

@@ -30,10 +30,11 @@ function uploadJSON(req,res){
     upload(req, res, function (err) {
         let filedata = req.file;
         if(filedata === undefined){
-            res.sendStatus(200);
-        }else{
-            jsonRead();
             res.sendStatus(400);
+        }else{
+            jsonRead()
+            jsonDelete()
+            res.sendStatus(200);
         }
 
     })
@@ -43,8 +44,8 @@ function uploadJSON(req,res){
 function jsonRead(){
     let rawdata = fs.readFileSync(path);
     let klausur = JSON.parse(rawdata);
+    //klausur enthält die notwendige JSON
     console.log(klausur);
-    jsonDelete();
 }
 
 //Die Datei löschen

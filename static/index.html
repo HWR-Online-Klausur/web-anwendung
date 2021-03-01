@@ -5,30 +5,37 @@
     <title>HWR Online Klausur</title>
 </head>
 <body>
-    <form method="post" action="/jsonRead" enctype="multipart/form-data">
+    <form id="MyForm">
         <input type="file" accept="application/json" id="jsonKlausur" name="jsonKlausur">
         <br>
         <button type="submit">Send</button>
     </form>
+<p id="status"></p>
+    <script>
+        const MyForm = document.getElementById('MyForm');
+        MyForm.addEventListener('submit',function (e){
+            e.preventDefault();
 
-<!--    <script>-->
-<!--        const input = document.getElementById('jsonKlausur');-->
-<!--        const formData = new FormData();-->
-<!--        formData.append('jsonKlausur', input.files[0]);-->
-<!--        fetch('/jsonRead', {-->
-<!--            method: 'POST',-->
-<!--            headers: {-->
-<!--                'Content-Type': 'multipart/form-data',-->
-<!--            },-->
-<!--            body: formData-->
-<!--        })-->
-<!--            .then(response => response.json())-->
-<!--            .then(result => {-->
-<!--                console.log('Success:', result);-->
-<!--            })-->
-<!--            .catch(error => {-->
-<!--                console.error('Error:', error);-->
-<!--            });-->
-<!--    </script>-->
+            const input = document.getElementById('jsonKlausur');
+            const formData = new FormData();
+            formData.append('jsonKlausur', input.files[0]);
+            fetch('/jsonRead', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if(response.status===200){
+                        input.value = "";
+                            document.getElementById('status').innerText="Sie haben die JSON Datei erfolgreich abgeschickt!"
+                    }else{
+                        document.getElementById('status').innerText="Beim senden der JSON Datei ist ein Problem aufgetreten!"
+                    }
+                })
+                .catch(error => {
+                console.error('Error:', error);
+            });
+        })
+
+    </script>
 </body>
 </html>

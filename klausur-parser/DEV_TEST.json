@@ -10,13 +10,13 @@
     },
     {
       "fragestellung": "Schreiben Sie drei Wörter",
-      "methode": "text-kurz",
+      "methode": "text",
       "antworten": [],
       "id": "ab2"
     },
     {
       "fragestellung": "Schreiben Sie einen sehr ausführlichen Aufsatz",
-      "methode": "text-lang",
+      "methode": "text",
       "antworten": [],
       "id": "ab3"
     },

@@ -1,14 +1,15 @@
 const fs = require('fs');
+const { v4: uuidv4 } = require("uuid");
 const multer = require('multer');
 
-const FileName = "tmp"+Date.now()+".json";
-const path = `./klausuren/${FileName}`;
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'klausuren')
     },
     filename: function (req, file, cb) {
+        const FileName = "tmp"+uuidv4()+".json";
         cb(null, FileName)
     }
 })
@@ -32,8 +33,10 @@ function uploadJSON(req,res){
         if(filedata === undefined){
             res.sendStatus(400);
         }else{
-            jsonRead()
-            jsonDelete()
+            const FileName = req.file.filename;
+            const path = `./klausuren/${FileName}`;
+            jsonRead(path);
+            jsonDelete(path);
             res.sendStatus(200);
         }
 
@@ -41,7 +44,7 @@ function uploadJSON(req,res){
 }
 
 //Die Datei wird gelesen
-function jsonRead(){
+function jsonRead(path){
     let rawdata = fs.readFileSync(path);
     let klausur = JSON.parse(rawdata);
     //klausur enthält die notwendige JSON
@@ -49,7 +52,7 @@ function jsonRead(){
 }
 
 //Die Datei löschen
-function jsonDelete(){
+function jsonDelete(path){
     try {
         fs.unlinkSync(path)
     } catch(err) {

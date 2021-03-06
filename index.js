@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
     res.send();
 })
 
-app.post('/jsonRead',uploadJSON);
+app.post('/api/jsonRead',uploadJSON);
 
 
 app.listen(port, () => {

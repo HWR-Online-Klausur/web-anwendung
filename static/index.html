@@ -19,7 +19,7 @@
             const input = document.getElementById('jsonKlausur');
             const formData = new FormData();
             formData.append('jsonKlausur', input.files[0]);
-            fetch('/jsonRead', {
+            fetch('/api/jsonRead', {
                 method: 'POST',
                 body: formData
             })

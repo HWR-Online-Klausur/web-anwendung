@@ -2,23 +2,6 @@ const klausur = require('./klausur');
 
 /**
  *
- * TEMP INPUTS FOR DEVELOPMENT
- *
- */
-const fs = require('fs');
-const DEV_INPUT = '';
-
-function dev_read_json() {
-    const file = fs.readFileSync('./DEV_TEST.json').toString();
-    const jf = JSON.parse(file);
-    klausur.setKlausur(jf);
-}
-
-dev_read_json()
-// console.log(klausur.getAufgaben());
-
-/**
- *
  *  PARSE OPS
  *
  */
@@ -39,8 +22,6 @@ function aufgabenParse() {
         }
     }
 }
-
-// TODO: Create Methoden vollenden
 
 function createMultipleChoice(id, fragestellung, antworten) {
     let options = "";

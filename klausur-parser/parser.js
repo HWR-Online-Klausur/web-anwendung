@@ -54,5 +54,6 @@ function createText(id, fragestellung) {
     klausur.addKlausurHTML(html);
 }
 
-aufgabenParse();
-console.log(klausur.getKlausurHTML());
+module.exports = {
+    aufgabenParse
+}

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { v4: uuidv4 } = require("uuid");
 const multer = require('multer');
-
+const { klausur, aufgabenParse } = require('../klausur-parser');
 
 
 const storage = multer.diskStorage({
@@ -37,6 +37,9 @@ function uploadJSON(req,res){
             const path = `./klausuren/${FileName}`;
             jsonRead(path);
             jsonDelete(path);
+
+            // IN DB EINTRAGEN
+
             res.sendStatus(200);
         }
 
@@ -46,9 +49,9 @@ function uploadJSON(req,res){
 //Die Datei wird gelesen
 function jsonRead(path){
     let rawdata = fs.readFileSync(path);
-    let klausur = JSON.parse(rawdata);
+    let klausurJson = JSON.parse(rawdata);
     //klausur enthält die notwendige JSON
-    console.log(klausur);
+    klausur.setKlausur(klausurJson);
 }
 
 //Die Datei löschen

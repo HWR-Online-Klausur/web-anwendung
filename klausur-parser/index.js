@@ -1,5 +1,7 @@
-const paser = require('./parser');
+const { aufgabenParse } = require('./parser');
+const klausur = require('./klausur');
 
 module.exports = {
-
+    aufgabenParse,
+    klausur
 }

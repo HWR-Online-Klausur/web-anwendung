@@ -1,0 +1,20 @@
+.container-fluid{
+  padding-top: 12px;
+}
+
+.studentDataForm .form-control{
+  min-width: 150px;
+}
+
+.klausurstatus{
+  text-align: center;
+}
+
+.studentDataStatus{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: green;
+  font-size: x-large;
+}
+

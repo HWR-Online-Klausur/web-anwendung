@@ -30,6 +30,8 @@ function setText() {
         let tempRemain = new Date(timerRemain);
         let timerTime = new Date(tempRemain.getTime() + timeOffset * 60 * 1000);
         element.innerText = `${zeroPad(timerTime.getHours())}:${zeroPad(timerTime.getMinutes())}:${zeroPad(timerTime.getSeconds())}`
+    } else {
+        element.innerText = "00:00:00";
     }
 }
 

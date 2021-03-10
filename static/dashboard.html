@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- My CSS -->
+    <link rel="stylesheet" type="text/css" href="style/dashboardStyle.css">
+    <!-- Bootstrap CSS -->
+    <link href="./style/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="./style/js/bootstrap.bundle.min.js"></script>
+
+    <title>Dashboard</title>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">HWR-online-klausuren</span>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col uploadFormCol">
+            <form id="jsonKlausurForm">
+                <div class="input-group">
+                    <input type="file" accept="application/json" class="form-control" id="jsonKlausur"
+                           name="jsonKlausur" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Upload</button>
+                </div>
+            </form>
+        </div>
+        <div class="col klausurUploadStatus">
+            <p id="status"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col zeitFormcol">
+            Wählen sie die Zeit:
+            <br>
+            <form id="zeitKlausurForm">
+                <label for="stunden">Stunden:</label>
+                <input type="number" id="stunden" name="stunden" min="0" max="24" value="0">
+                <label for="minuten">Minuten:</label>
+                <input type="number" id="minuten" name="minuten" min="0" max="59" value="0">
+                <br>
+                <input type="submit" value="Klausur starten">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            Timer:
+            <button>+</button>
+            <button>-</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr class="table-success">
+                    <th scope="row">2</th>
+                    <td>Jacob Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>Jimmy Carter</td>
+                    <td>@twitter</td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <td>Nancy</td>
+                    <td>@twitter</td>
+                </tr>
+                <tr>
+                    <th scope="row">6</th>
+                    <td>Karl</td>
+                    <td>@twitter</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="script/dashboardFunktions.js"></script>
+</body>
+</html>

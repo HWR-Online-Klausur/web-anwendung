@@ -1,0 +1,15 @@
+.container-fluid{
+    padding-top: 12px;
+}
+
+.container-fluid .uploadFormCol{
+    min-width: 390px;
+}
+
+.zeitFormcol{
+    padding-top: 12px;
+}
+
+#zeitKlausurForm input{
+    margin-top: 12px;
+}

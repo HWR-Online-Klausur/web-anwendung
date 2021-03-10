@@ -8,9 +8,13 @@
     <div id="timer">
         <span id="timer-text"></span>
         <button type="button" onclick="startTimer()">Start</button>
-        <button type="button" onclick="stopTimer()">Stop</button>
-        <label for="settime-text">Time (min): </label><input type="number" id="settime-text" >
-        <button type="button" onclick="setTimer()">Set</button>
+        <button type="button" onclick="resetTimer()">Reset</button><br>
+        <label for="settime-text">Set Time (min): </label><input type="number" id="settime-text" >
+        <button type="button" onclick="setTimer()">Set</button><br>
+        <label for="addtime-text">Add Time (min): </label><input type="number" id="addtime-text" >
+        <button type="button" onclick="addTimer()">Add</button><br>
+        <label for="subtime-text">Substract Time (min): </label><input type="number" id="subtime-text" >
+        <button type="button" onclick="subTimer()">Sub</button>
     </div>
 
     <script rel="script" src="js/timer.js"></script>

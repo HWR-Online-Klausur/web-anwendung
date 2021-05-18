@@ -27,7 +27,6 @@ function addTime(m) {
 function apiSetTime(req, res) {
     try {
         const time = Number(req.body.timerTime);
-        timerLag = 0;
         if (time) {
             setTime(time);
             res.sendStatus(200);
@@ -81,10 +80,16 @@ function apiAddTime(req, res) {
     }
 }
 
+function konvertTime(stunden, minuten){
+    return Number(stunden)*60 + Number(minuten)
+}
+
 module.exports = {
     apiGetTime,
     apiSetTime,
     apiStartTimer,
     apiResetTimer,
-    apiAddTime
+    apiAddTime,
+    konvertTime,
+    setTime
 }

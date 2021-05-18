@@ -15,10 +15,12 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <span class="navbar-brand mb-0 h1">HWR-online-klausuren</span>
+        <span>Zeit: <span id="timer-text"></span></span>
     </div>
 </nav>
 
 <div class="container-fluid">
+    <div id="divKlausurEinstellungeg" hidden>
     <div class="row">
         <div class="col uploadFormCol">
             <form id="jsonKlausurForm">
@@ -43,18 +45,40 @@
                 <label for="minuten">Minuten:</label>
                 <input type="number" id="minuten" name="minuten" min="0" max="59" value="0">
                 <br>
-                <input type="submit" value="Klausur starten">
+                <input type="submit" value="Zeit speichern">
             </form>
         </div>
     </div>
+        <div class="container">
+            <div class="row justify-content-center">
+            <div class="col-auto">
+                <label for="klausurStarten">Klausur Starten:</label>
+                <button type="button" class="btn btn-primary" onclick="startTimer()" id="klausurStarten">Start</button>
+            </div>
+            </div>
+        </div>
+    </div>
+        <div class="row rowKlausurEinstellungenButton">
+            <button type="button" class="btn btn-outline-secondary" onclick="toggleKlausurEinstellungen()"
+            id="toggleKlausurEinstellungenButton">Klausur Einstellungen öffnen <img src='style/icons/arrow-down-circle-fill.svg'></button>
+        </div>
+
+
 </div>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            Timer:
-            <button>+</button>
-            <button>-</button>
+            Zeit während des Klausur steuern:
+            <br>
+            <form>
+            <label for="addtime-text">Add Time (min): </label>
+            <input type="number" id="addtime-text">
+            <button type="button" onclick="addTimer()">Add</button><br>
+            <label for="subtime-text">Substract Time (min): </label>
+            <input type="number" id="subtime-text" >
+            <button type="button" onclick="subTimer()">Sub</button>
+            </form>
         </div>
     </div>
     <div class="row">
@@ -71,32 +95,32 @@
                 <tr>
                     <th scope="row">1</th>
                     <td>Mark Otto</td>
-                    <td>@mdo</td>
+                    <td><button>Herunterladen</button></td>
                 </tr>
                 <tr class="table-success">
                     <th scope="row">2</th>
                     <td>Jacob Thornton</td>
-                    <td>@fat</td>
+                    <td><button class="btn-success">Herunterladen</button></td>
                 </tr>
                 <tr>
                     <th scope="row">3</th>
                     <td>Larry the Bird</td>
-                    <td>@twitter</td>
+                    <td><button>Herunterladen</button></td>
                 </tr>
                 <tr>
                     <th scope="row">4</th>
                     <td>Jimmy Carter</td>
-                    <td>@twitter</td>
+                    <td><button>Herunterladen</button></td>
                 </tr>
                 <tr>
                     <th scope="row">5</th>
                     <td>Nancy</td>
-                    <td>@twitter</td>
+                    <td><button>Herunterladen</button></td>
                 </tr>
                 <tr>
                     <th scope="row">6</th>
                     <td>Karl</td>
-                    <td>@twitter</td>
+                    <td><button>Herunterladen</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -105,6 +129,7 @@
 </div>
 
 
-<script src="script/dashboardFunktions.js"></script>
+<script src="js/dashboardFunktions.js"></script>
+<script src="js/timer.js"></script>
 </body>
 </html>

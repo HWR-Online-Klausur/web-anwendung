@@ -3,7 +3,7 @@ const app = express();
 
 const {uploadJSON} = require('./jsonRead');
 const {apiGetTime, apiSetTime, apiStartTimer,
-    apiStopTimer, apiResetTimer, apiAddTime} = require('./sync-timer')
+    konvertTime, apiResetTimer, apiAddTime, setTime} = require('./sync-timer')
 
 const port = 3000;
 
@@ -20,8 +20,12 @@ app.get('/api/klausurStatus', (req,res)=>{
     res.send(klausurStatus);
 })
 
-app.post('/api/klausurStarten', (req, res)=>{
-        console.log(req.body);
+app.post('/api/klausur', (req, res)=>{
+        let stunden = req.body.stunden;
+        let minuten = req.body.minuten;
+        let time = konvertTime(stunden, minuten);
+        setTime(time);
+        res.sendStatus(200);
 })
 
 app.get('/api/timer', apiGetTime);

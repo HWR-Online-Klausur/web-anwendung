@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const {uploadJSON} = require('./jsonRead');
+const {uploadJSON, checkFolder} = require('./jsonRead');
 const {apiGetTime, apiSetTime, apiStartTimer,
     konvertTime, apiResetTimer, apiAddTime, setTime} = require('./sync-timer')
 
@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(express.static(__dirname + "/static"));
 
-app.post('/api/jsonRead', uploadJSON);
+app.post('/api/jsonRead', checkFolder, uploadJSON);
 
 
 let klausurStatus = false;

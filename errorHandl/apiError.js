@@ -10,7 +10,7 @@ Usage example:
 const apiError = require('../errorHandl/apiError');
 
 function someFunction(req, res, next){
-        //some code
+        //some code  
          return next(apiError.badRequest('Etwas ist schief gelaufen. Bitte versuche es erneut'));
  }
  */

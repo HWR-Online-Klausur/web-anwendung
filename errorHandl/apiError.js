@@ -9,7 +9,7 @@ app.use(errorHandler);
 Usage example:
 const apiError = require('../errorHandl/apiError');
 
-async registration(req, res, next){
+function someFunction(req, res, next){
         //some code
          return next(apiError.badRequest('Etwas ist schief gelaufen. Bitte versuche es erneut'));
  }

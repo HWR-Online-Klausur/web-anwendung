@@ -5,6 +5,8 @@ const {uploadJSON} = require('./jsonRead');
 const {apiGetTime, apiSetTime, apiStartTimer,
     konvertTime, apiResetTimer, apiAddTime, setTime} = require('./sync-timer')
 
+const errorHandler = require('./middleware/errorHandlingMiddleware');
+
 const port = 3000;
 
 app.use(express.json());
@@ -33,6 +35,9 @@ app.get('/api/timer/start', apiStartTimer);
 app.get('/api/timer/reset', apiResetTimer);
 app.post('/api/timer', apiSetTime);
 app.post('/api/timer/add', apiAddTime);
+
+//Error handler. Should always be last middleware!
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Der Server wurde gestartet! http://localhost:${port}`);

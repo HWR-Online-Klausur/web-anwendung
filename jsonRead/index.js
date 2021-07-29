@@ -2,6 +2,7 @@ const fs = require('fs');
 const { v4: uuidv4 } = require("uuid");
 const multer = require('multer');
 const { klausur, aufgabenParse } = require('../klausur-parser');
+const apiError = require('../errorHandl/apiError');
 
 
 const storage = multer.diskStorage({

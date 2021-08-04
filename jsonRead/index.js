@@ -17,6 +17,7 @@ function checkFolder(req,res){
     });
 };
 
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'klausuren')

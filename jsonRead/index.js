@@ -3,6 +3,21 @@ const { v4: uuidv4 } = require("uuid");
 const multer = require('multer');
 const { klausur, aufgabenParse } = require('../klausur-parser');
 
+
+//Stellt sicher, dass Ordner "klausuren" da ist. Wenn nicht - erstellt es.
+function checkFolder(req,res){
+    fs.stat('./klausuren', function(err) {
+        if(!err){
+            res.sendStatus(200);
+        }
+        else if (err.code === 'ENOENT') {
+            fs.mkdirSync('./klausuren');
+            res.sendStatus(200);
+        }
+    });
+};
+
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'klausuren')
@@ -64,5 +79,6 @@ function jsonDelete(path){
 
 
 module.exports = {
+    checkFolder,
     uploadJSON
 }

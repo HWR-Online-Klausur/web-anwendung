@@ -39,3 +39,22 @@ function updateKlausurstatus(){
 }
 
 updateKlausurstatus();
+
+
+function getBody() {
+    const body = document.getElementById("klausurbody")
+    fetch('/api/klausur/getBody', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'GET'
+    })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            for (let prop in data) {
+                body.innerHTML += data[prop];
+            }
+        });
+}

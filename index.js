@@ -4,6 +4,7 @@ const app = express();
 const {uploadJSON, checkFolder} = require('./jsonRead');
 const {apiGetTime, apiSetTime, apiStartTimer,
     konvertTime, apiResetTimer, apiAddTime, setTime} = require('./sync-timer')
+const {klausur} = require('./klausur-parser');
 
 const errorHandler = require('./middleware/errorHandlingMiddleware');
 
@@ -36,9 +37,22 @@ app.get('/api/timer/reset', apiResetTimer);
 app.post('/api/timer', apiSetTime);
 app.post('/api/timer/add', apiAddTime);
 
+app.get('/api/klausur/getBody', (req, res) => {
+    res.send(klausur.getKlausurHTML());
+});
+
 //Error handler. Should always be last middleware!
 app.use(errorHandler);
 
-app.listen(port, () => {
+
+const start = async () => {
+    try {
+        await app.listen(port);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+start().then(()=>{
     console.log(`Der Server wurde gestartet! http://localhost:${port}`);
-})
+});

@@ -7,6 +7,7 @@ const klausur = require('./klausur');
  */
 
 function aufgabenParse() {
+    klausur.clearKlausurHTML();
     for (const a of klausur.getAufgaben()) {
         switch (a.methode) {
             case 'multiple-choice':
@@ -28,7 +29,7 @@ function createMultipleChoice(id, fragestellung, antworten) {
     let i = 0;
     for (const a of antworten) {
         const tempID = `${id}-${i}`;
-        options += `<input type="checkbox" id="${tempID}" name="${tempID}" value="${a}"><label for="${tempID}">${fragestellung}</label>`;
+        options += `<input type="checkbox" id="${tempID}" name="${tempID}" value="${a}"><label for="${tempID}">${a}</label>`;
         i++;
     }
     const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div>`;

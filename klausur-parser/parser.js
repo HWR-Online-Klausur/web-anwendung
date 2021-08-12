@@ -29,10 +29,10 @@ function createMultipleChoice(id, fragestellung, antworten) {
     let i = 0;
     for (const a of antworten) {
         const tempID = `${id}-${i}`;
-        options += `<input type="checkbox" id="${tempID}" name="${tempID}" value="${a}"><label for="${tempID}">${a}</label>`;
+        options += `<input class="form-check-input" type="checkbox" id="${tempID}" name="${tempID}" value="${a}"><label class="form-check-label" for="${tempID}">${a}</label> <br>`;
         i++;
     }
-    const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div>`;
+    const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div><hr>`;
 
     klausur.addKlausurHTML(html);
 }
@@ -42,16 +42,16 @@ function createSingleChoice(id, fragestellung, antworten) {
     let i = 0;
     for (const a of antworten) {
         const tempID = `${id}-${i}`;
-        options += `<input type="radio" id="${tempID}" name="${id}" value="${a}"><label for="${tempID}">${a}</label>`;
+        options += `<input class="form-check-input" type="radio" id="${tempID}" name="${id}" value="${a}"><label class="form-check-label" for="${tempID}">${a}</label> <br>`;
         i++;
     }
-    const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div>`;
+    const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div><hr>`;
 
     klausur.addKlausurHTML(html);
 }
 
 function createText(id, fragestellung) {
-    const html = `<div id="${id}-div"><p>${fragestellung}</p><textarea name="${id}"></textarea></div>`;
+    const html = `<div id="${id}-div"><p>${fragestellung}</p><textarea class="form-control" name="${id}"></textarea></div><hr>`;
     klausur.addKlausurHTML(html);
 }
 

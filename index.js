@@ -18,6 +18,17 @@ app.post('/api/jsonRead', checkFolder, uploadJSON);
 
 
 let klausurStatus = false;
+const changeStatus =  (req,res, next) =>{
+    let data = klausur.getKlausurHTML();
+    if(data.length===0){
+        klausurStatus = false;
+        res.status(404).send('JSON not found');
+    }else{
+        klausurStatus = true;
+        next();
+    }
+
+}
 
 app.get('/api/klausurStatus', (req,res)=>{
     res.send(klausurStatus);
@@ -32,13 +43,14 @@ app.post('/api/klausur', (req, res)=>{
 })
 
 app.get('/api/timer', apiGetTime);
-app.get('/api/timer/start', apiStartTimer);
+app.get('/api/timer/start',changeStatus, apiStartTimer);
 app.get('/api/timer/reset', apiResetTimer);
 app.post('/api/timer', apiSetTime);
 app.post('/api/timer/add', apiAddTime);
 
 app.get('/api/klausur/getBody', (req, res) => {
-    res.send(klausur.getKlausurHTML());
+    let data = klausur.getKlausurHTML();
+        res.send(data);
 });
 
 //Error handler. Should always be last middleware!

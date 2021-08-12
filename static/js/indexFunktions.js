@@ -29,7 +29,8 @@ function updateKlausurstatus(){
             .then(klausurStatus => {
                 const status = document.getElementById("klausurstatus")
                 if (klausurStatus) {
-                    status.innerText = "Klausur wurde gestartet"
+                    status.innerText = "Klausur wurde gestartet";
+                    getBody();
                 } else {
                     status.innerText = "Klausur noch nicht gestartet"
                 }
@@ -38,11 +39,11 @@ function updateKlausurstatus(){
     },1000)
 }
 
-updateKlausurstatus();
-
-
+//Get Klausur-Body for students and start the timer
 function getBody() {
-    const body = document.getElementById("klausurbody")
+    const body = document.getElementById("klausurbody");
+
+
     fetch('/api/klausur/getBody', {
         headers: {
             'Content-Type': 'application/json'
@@ -53,8 +54,17 @@ function getBody() {
             return res.json();
         })
         .then(data => {
-            for (let prop in data) {
-                body.innerHTML += data[prop];
+            if(body.innerHTML.trim().length===0){
+                for (let prop in data) {
+                    body.innerHTML += data[prop];
+                }
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
 }
+
+
+updateKlausurstatus();
+

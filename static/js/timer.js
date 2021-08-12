@@ -81,7 +81,25 @@ function subTimer() {
 }
 
 function startTimer() {
-    fetch('/api/timer/start');
+    fetch('/api/klausur/getBody', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'GET'
+    })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            if(data.length===0){
+                alert('Laden Sie die Klausur');
+            }else{
+                fetch('/api/timer/start');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 function resetTimer() {

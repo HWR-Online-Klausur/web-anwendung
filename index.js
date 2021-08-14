@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 
+const { connectDB } = require('./db');
 const {uploadJSON, checkFolder} = require('./jsonRead');
 const {apiGetTime, apiSetTime, apiStartTimer,
     konvertTime, apiResetTimer, apiAddTime, setTime} = require('./sync-timer')
@@ -59,6 +60,7 @@ app.use(errorHandler);
 
 const start = async () => {
     try {
+        await connectDB();
         await app.listen(port);
     } catch (e) {
         console.log(e);

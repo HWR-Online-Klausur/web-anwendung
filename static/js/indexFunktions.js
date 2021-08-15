@@ -15,14 +15,10 @@ function updateDataStatus() {
 
 //Change Klausurstatus
 
-
-
-
-
 function updateKlausurstatus(){
     setTimeout(()=> {
 
-        fetch("/api/klausurStatus")
+        fetch("/api/klausur/klausurStatus")
             .then(res => {
                 return res.json();
             })

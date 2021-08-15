@@ -19,6 +19,8 @@ app.post('/api/jsonRead', checkFolder, uploadJSON);
 
 
 let klausurStatus = false;
+
+//should we move this function? Where?
 const changeStatus =  (req,res, next) =>{
     let data = klausur.getKlausurHTML();
     if(data.length===0){
@@ -31,17 +33,20 @@ const changeStatus =  (req,res, next) =>{
 
 }
 
-app.get('/api/klausurStatus', (req,res)=>{
+app.get('/api/klausur/klausurStatus', (req,res)=>{
     res.send(klausurStatus);
 })
-
-app.post('/api/klausur', (req, res)=>{
+app.post('/api/klausur/setTime', (req, res)=>{
         let stunden = req.body.stunden;
         let minuten = req.body.minuten;
         let time = konvertTime(stunden, minuten);
         setTime(time);
         res.sendStatus(200);
 })
+app.get('/api/klausur/getBody', (req, res) => {
+    let data = klausur.getKlausurHTML();
+    res.send(data);
+});
 
 app.get('/api/timer', apiGetTime);
 app.get('/api/timer/start',changeStatus, apiStartTimer);
@@ -49,10 +54,7 @@ app.get('/api/timer/reset', apiResetTimer);
 app.post('/api/timer', apiSetTime);
 app.post('/api/timer/add', apiAddTime);
 
-app.get('/api/klausur/getBody', (req, res) => {
-    let data = klausur.getKlausurHTML();
-        res.send(data);
-});
+
 
 //Error handler. Should always be last middleware!
 app.use(errorHandler);

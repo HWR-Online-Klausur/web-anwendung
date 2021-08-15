@@ -38,7 +38,7 @@ zeitKlausurForm.addEventListener('submit',function (e){
     const minuten = document.getElementById("minuten").value;
     const obj = {stunden: stunden, minuten: minuten};
 
-    fetch('/api/klausur', {
+    fetch('/api/klausur/setTime', {
         headers: {
             'Content-Type': 'application/json'
         },

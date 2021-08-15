@@ -8,6 +8,9 @@ const {apiGetTime, apiSetTime, apiStartTimer,
 const {klausur} = require('./klausur-parser');
 
 const errorHandler = require('./middleware/errorHandlingMiddleware');
+const userController = require('./controllers/userController');
+
+
 
 const port = 3000;
 
@@ -54,7 +57,7 @@ app.get('/api/timer/reset', apiResetTimer);
 app.post('/api/timer', apiSetTime);
 app.post('/api/timer/add', apiAddTime);
 
-
+app.post('/api/data/addUser',userController.addUser);
 
 //Error handler. Should always be last middleware!
 app.use(errorHandler);

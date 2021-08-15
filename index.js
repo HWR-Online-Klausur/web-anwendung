@@ -15,7 +15,6 @@ app.use(express.json());
 
 app.use(express.static(__dirname + "/static"));
 
-app.post('/api/jsonRead', checkFolder, uploadJSON);
 
 
 let klausurStatus = false;
@@ -33,6 +32,7 @@ const changeStatus =  (req,res, next) =>{
 
 }
 
+app.post('/api/klausur/jsonRead', checkFolder, uploadJSON);
 app.get('/api/klausur/klausurStatus', (req,res)=>{
     res.send(klausurStatus);
 })

@@ -2,8 +2,10 @@ const Router = require('express');
 const router = new Router;
 const klausurController = require('../controllers/klausurController');
 
-router.post('/klausurStatus', klausurController.apiStartTimer);
-router.post('/setTime', klausurController.apiResetTimer);
-router.post('/getBody',klausurController.apiAddTime);
+router.post('/jsonRead',klausurController.uploadJSON);
+router.post('/klausurStatus', klausurController.klausurStatusSend);
+router.post('/setTime', klausurController.setTime);
+router.post('/getBody',klausurController.getBody);
+
 
 module.exports = router;

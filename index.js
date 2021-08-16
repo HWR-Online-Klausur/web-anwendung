@@ -15,6 +15,7 @@ const userController = require('./controllers/userController');
 const port = 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + "/static"));
 
@@ -58,6 +59,7 @@ app.post('/api/timer', apiSetTime);
 app.post('/api/timer/add', apiAddTime);
 
 app.post('/api/data/addUser',userController.addUser);
+app.post('/api/data/deleteUser',userController.deleteUser);
 
 //Error handler. Should always be last middleware!
 app.use(errorHandler);

@@ -1,17 +1,49 @@
 //Change input Student Data
-const inputName = document.getElementById("studentenNameInput");
-const inputNummer = document.getElementById("studentenMatrikelnummerInput");
 
-inputName.addEventListener('change', updateDataStatus);
-inputNummer.addEventListener('change', updateDataStatus);
+const SwitchCheckNameNummer = document.getElementById("SwitchCheckNameNummer");
+
+SwitchCheckNameNummer.addEventListener('change', updateDataStatus);
 
 function updateDataStatus() {
     const status = document.getElementById("studentDataStatus");
-    status.innerText = "";
-    setTimeout(()=>{
-        status.innerText = "Angabe wurde gespeichert!";
-    }, 5000);
+    const inputName = document.getElementById("studentenNameInput");
+    const inputNummer = document.getElementById("studentenMatrikelnummerInput");
+
+    if (this.checked) {
+        inputName.setAttribute("disabled", "true");
+        inputNummer.setAttribute("disabled", "true");
+
+        fetch('/api/data/addUser', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: inputName.value, matrikelnummer: inputNummer.value})
+        })
+            .then(response => {
+            if(response.status===200){
+                status.innerHTML = `<div class="alert alert-success" role="alert">Angabe wurde gespeichert!</div>`;
+            }else{
+                status.innerHTML = `<div class="alert alert-danger" role="alert">Beim Speichern Ihrer Angabe ist ein Problem aufgetreten!</div>`;
+            }
+        })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+
+    } else {
+        deleteUser();
+
+        inputName.removeAttribute("disabled");
+        inputNummer.removeAttribute("disabled");
+    }
+
+
+
 }
+
 
 //Change Klausurstatus
 
@@ -63,4 +95,55 @@ function getBody() {
 
 
 updateKlausurstatus();
+
+//if we close or reload the tab - user will be deleted
+const beforeUnloadListener = (event) => {
+    deleteUser();
+    event.preventDefault();
+    return event.returnValue = "Are you sure you want to exit?";
+};
+
+addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+
+//TODO: make it for all inputs
+/*
+const input = document.querySelectorAll("input");
+for (let elem of input) {
+    console.log(elem.value)
+}
+input.addEventListener("input", (event) => {
+    if (event.target.value !== "") {
+        addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+    } else {
+        removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+    }
+});
+ */
+
+
+
+//deleteUser function use
+function deleteUser(){
+    const status = document.getElementById("studentDataStatus");
+    const inputName = document.getElementById("studentenNameInput");
+    const inputNummer = document.getElementById("studentenMatrikelnummerInput");
+    fetch('/api/data/deleteUser', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name: inputName.value, matrikelnummer: inputNummer.value})
+    })
+        .then(response => {
+            if(response.status===200){
+                status.innerHTML = `<div class="alert alert-success" role="alert">Angabe wurde gelöscht!</div>`;
+            }else{
+                status.innerHTML = `<div class="alert alert-danger" role="alert">Beim Löschen Ihrer Angabe ist ein Problem aufgetreten!</div>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 

@@ -60,6 +60,8 @@ app.post('/api/timer/add', apiAddTime);
 
 app.post('/api/data/addUser',userController.addUser);
 app.post('/api/data/deleteUser',userController.deleteUser);
+app.get('/api/data/getAllUser',userController.findAllUser);
+app.get('/api/data/getUpdatePing',userController.getUpdatePing);
 
 //Error handler. Should always be last middleware!
 app.use(errorHandler);

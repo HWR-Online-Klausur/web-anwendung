@@ -9,7 +9,10 @@ const {klausur} = require('./klausur-parser');
 
 const errorHandler = require('./middleware/errorHandlingMiddleware');
 const userController = require('./controllers/userController');
-
+const klausurAbgabeController = require('./controllers/klausurAbgabeController');
+//we need multer and upload just for /api/klausurData/saveKlausurData. I have not found another solution
+const multer  = require('multer')
+const upload = multer()
 
 
 const port = 3000;
@@ -62,6 +65,10 @@ app.post('/api/data/addUser',userController.addUser);
 app.post('/api/data/deleteUser',userController.deleteUser);
 app.get('/api/data/getAllUser',userController.findAllUser);
 app.get('/api/data/getUpdatePing',userController.getUpdatePing);
+
+
+app.post('/api/klausurData/saveKlausurData',upload.none(),klausurAbgabeController.saveKlausurData);
+
 
 //Error handler. Should always be last middleware!
 app.use(errorHandler);

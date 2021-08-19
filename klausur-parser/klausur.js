@@ -40,6 +40,10 @@ function addKlausurHTML(html) {
     KlausurHTML.push(html);
 }
 
+function clearKlausurHTML() {
+    KlausurHTML = [];
+}
+
 function getKlausurHTML() {
     return KlausurHTML;
 }
@@ -51,5 +55,6 @@ module.exports = {
     getModul,
     getAufgaben,
     addKlausurHTML,
+    clearKlausurHTML,
     getKlausurHTML
 }

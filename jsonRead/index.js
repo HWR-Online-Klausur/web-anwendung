@@ -2,17 +2,18 @@ const fs = require('fs');
 const { v4: uuidv4 } = require("uuid");
 const multer = require('multer');
 const { klausur, aufgabenParse } = require('../klausur-parser');
+const apiError = require('../errorHandl/apiError');
 
 
 //Stellt sicher, dass Ordner "klausuren" da ist. Wenn nicht - erstellt es.
-function checkFolder(req,res){
+function checkFolder(req,res, next){
     fs.stat('./klausuren', function(err) {
         if(!err){
-            res.sendStatus(200);
+            next()
         }
         else if (err.code === 'ENOENT') {
             fs.mkdirSync('./klausuren');
-            res.sendStatus(200);
+            next()
         }
     });
 };
@@ -41,11 +42,11 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({storage: storage, fileFilter: fileFilter}).single("jsonKlausur");
 
 //Datei uploaden
-function uploadJSON(req,res){
+function uploadJSON(req,res, next){
     upload(req, res, function (err) {
         let filedata = req.file;
         if(filedata === undefined){
-            res.sendStatus(400);
+            return next(apiError.badRequest('Etwas ist schief gelaufen. Bitte versuche es erneut'));
         }else{
             const FileName = req.file.filename;
             const path = `./klausuren/${FileName}`;
@@ -53,7 +54,6 @@ function uploadJSON(req,res){
             jsonDelete(path);
 
             // IN DB EINTRAGEN
-
             res.sendStatus(200);
         }
 
@@ -66,6 +66,8 @@ function jsonRead(path){
     let klausurJson = JSON.parse(rawdata);
     //klausur enthält die notwendige JSON
     klausur.setKlausur(klausurJson);
+    aufgabenParse();
+
 }
 
 //Die Datei löschen

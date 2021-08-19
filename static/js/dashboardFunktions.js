@@ -9,7 +9,7 @@ jsonKlausurForm.addEventListener('submit',function (e){
     const formData = new FormData();
     formData.append('jsonKlausur', input.files[0]);
 
-    fetch('/api/jsonRead', {
+    fetch('/api/klausur/jsonRead', {
         method: 'POST',
         body: formData
     })
@@ -38,7 +38,7 @@ zeitKlausurForm.addEventListener('submit',function (e){
     const minuten = document.getElementById("minuten").value;
     const obj = {stunden: stunden, minuten: minuten};
 
-    fetch('/api/klausur', {
+    fetch('/api/klausur/setTime', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -64,3 +64,43 @@ function toggleKlausurEinstellungen(){
     }
 
 }
+
+function getUsers(){
+    const tableBody = document.getElementById("tableBody");
+    let i = 1;
+
+    tableBody.innerHTML = ``;
+        fetch('/api/data/getAllUser', {
+            method: 'GET'
+        })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                for (let key in data) {
+                    tableBody.innerHTML += `<tr><th scope="row">${i}</th><td>${data[key].name}</td><td><button>Herunterladen</button></td></tr>`
+                    i++;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+}
+
+function checkUpdatePing(){
+    setTimeout(()=> {
+
+        fetch("/api/data/getUpdatePing")
+            .then(res => {
+                return res.json();
+            })
+            .then(updatePing => {
+                if (updatePing) {
+                    getUsers();
+                }
+            })
+        checkUpdatePing()
+    },100)
+}
+
+checkUpdatePing();

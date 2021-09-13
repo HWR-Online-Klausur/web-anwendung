@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 //Create connection
 const connectDB = async() => {
-    await mongoose.connect('mongodb://localhost:27017/onlineKlausur', {
+    await mongoose.connect('mongodb://db:27017/onlineKlausur', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,

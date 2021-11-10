@@ -7,6 +7,7 @@ const {apiGetTime, apiSetTime, apiStartTimer,
     konvertTime, apiResetTimer, apiAddTime, setTime} = require('./sync-timer')
 const {klausur} = require('./klausur-parser');
 
+//const router = require('./routes');
 const errorHandler = require('./middleware/errorHandlingMiddleware');
 const userController = require('./controllers/userController');
 const klausurAbgabeController = require('./controllers/klausurAbgabeController');
@@ -17,11 +18,12 @@ const upload = multer()
 
 const port = 3000;
 
+//region Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 app.use(express.static(__dirname + "/static"));
-
+//app.use('/api',router);
+//endregion Middleware
 
 
 let klausurStatus = false;

@@ -1,5 +1,5 @@
 const apiError = require('../errorHandl/apiError');
-const {klausur} = require("./klausur-parser");
+const {klausur} = require("../klausur-parser");
 const timerController = require('../controllers/timerController');
 
 let klausurStatus = false;

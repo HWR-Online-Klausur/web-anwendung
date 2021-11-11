@@ -6,31 +6,31 @@ let timerTime = 60 * 60 * 1000;
 let status = false;
 let finished = false;
 
+function setTime(m) {
+    timerTime = m * 60 * 1000;
+}
+
+function startTimer() {
+    if (!status) {
+        status = true;
+        timerStart = Date.now();
+    }
+}
+
+function addTime(m) {
+    timerTime += m * 60 * 1000;
+    if (m > 0) {
+        finished = false;
+    }
+}
 
 class TimerController{
-    setTime(m) {
-        timerTime = m * 60 * 1000;
-    }
-
-    startTimer() {
-        if (!status) {
-            status = true;
-            timerStart = Date.now();
-        }
-    }
-
-    addTime(m) {
-        timerTime += m * 60 * 1000;
-        if (m > 0) {
-            finished = false;
-        }
-    }
 
     apiSetTime(req, res) {
         try {
             const time = Number(req.body.timerTime);
             if (time) {
-                this.setTime(time);
+                setTime(time);
                 res.sendStatus(200);
             } else {
                 res.sendStatus(400);
@@ -41,7 +41,7 @@ class TimerController{
     }
 
     apiStartTimer(req, res) {
-        this.startTimer();
+        startTimer();
         res.sendStatus(200);
     }
 
@@ -75,7 +75,7 @@ class TimerController{
     apiAddTime(req, res) {
         try {
             const time = Number(req.body.timerTime);
-            this.addTime(time);
+            addTime(time);
             res.sendStatus(200);
         } catch (_) {
             res.sendStatus(400);

@@ -4,6 +4,45 @@ const multer = require('multer');
 const { klausur, aufgabenParse } = require('../klausur-parser');
 const apiError = require('../errorHandl/apiError');
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'klausuren')
+    },
+    filename: function (req, file, cb) {
+        const FileName = "tmp"+uuidv4()+".json";
+        cb(null, FileName)
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+
+    if(file.mimetype === "application/json"){
+        cb(null, true);
+    }
+    else{
+        cb(null, false);
+    }
+}
+
+const upload = multer({storage: storage, fileFilter: fileFilter}).single("jsonKlausur");
+
+
+function jsonRead(path){
+    let rawdata = fs.readFileSync(path);
+    let klausurJson = JSON.parse(rawdata);
+    //klausur enthält die notwendige JSON
+    klausur.setKlausur(klausurJson);
+    aufgabenParse();
+
+}
+
+function jsonDelete(path){
+    try {
+        fs.unlinkSync(path)
+    } catch(err) {
+        console.error(err)
+    }
+}
 
 class JsonReaderController{
     //Stellt sicher, dass Ordner "klausuren" da ist. Wenn nicht - erstellt es.
@@ -19,61 +58,22 @@ class JsonReaderController{
         });
     };
 
-    storage = multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, 'klausuren')
-        },
-        filename: function (req, file, cb) {
-            const FileName = "tmp"+uuidv4()+".json";
-            cb(null, FileName)
-        }
-    })
-
-    fileFilter = (req, file, cb) => {
-
-        if(file.mimetype === "application/json"){
-            cb(null, true);
-        }
-        else{
-            cb(null, false);
-        }
-    }
-
-    upload = multer({storage: this.storage, fileFilter: fileFilter}).single("jsonKlausur");
-
     uploadJSON(req,res, next){
-        this.upload(req, res, function (err) {
+        upload(req, res, function (err) {
             let filedata = req.file;
             if(filedata === undefined){
                 return next(apiError.badRequest('Etwas ist schief gelaufen. Bitte versuche es erneut'));
             }else{
                 const FileName = req.file.filename;
                 const path = `./klausuren/${FileName}`;
-                this.jsonRead(path);
-                this.jsonDelete(path);
+                jsonRead(path);
+                jsonDelete(path);
 
                 // IN DB EINTRAGEN
                 res.sendStatus(200);
             }
 
         })
-    }
-
-    jsonRead(path){
-        let rawdata = fs.readFileSync(path);
-        let klausurJson = JSON.parse(rawdata);
-        //klausur enthält die notwendige JSON
-        klausur.setKlausur(klausurJson);
-        aufgabenParse();
-
-    }
-
-    jsonDelete(path){
-        try {
-            fs.unlinkSync(path)
-        } catch(err) {
-            console.error(err)
-        }
     }
 }
 

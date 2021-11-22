@@ -1,40 +1,39 @@
 class klausur{
     constructor() {
-        this.Klausur = {
-            "dozent": "",
-            "modul": "",
-            "aufgaben": []
-        };
+        this.dozent = "";
+        this.modul = "";
+        this.aufgaben =  [];
+
     }
 
     setKlausur(pKlausur) {
         if (pKlausur) {
-            this.Klausur.dozent = pKlausur.dozent;
-            this.Klausur.modul = pKlausur.modul;
+            this.dozent = pKlausur.dozent;
+            this.modul = pKlausur.modul;
 
             // Stellt sicher, dass jede ID einmalig ist
             for (const a of pKlausur.aufgaben) {
-                if (this.Klausur.aufgaben.filter(kaf => kaf.id === a.id).length === 0) {
-                    this.Klausur.aufgaben.push(a);
+                if (this.aufgaben.filter(kaf => kaf.id === a.id).length === 0) {
+                    this.aufgaben.push(a);
                 }
             }
         }
     }
 
     getKlausur() {
-        return this.Klausur;
+        return this;
     }
 
     getDozent() {
-        return this.Klausur.dozent;
+        return this.dozent;
     }
 
     getModul() {
-        return this.Klausur.modul;
+        return this.modul;
     }
 
     getAufgaben() {
-        return this.Klausur.aufgaben;
+        return this.aufgaben;
     }
 }
 

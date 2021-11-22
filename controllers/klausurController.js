@@ -1,5 +1,5 @@
 const apiError = require('../errorHandl/apiError');
-const {klausur} = require("../klausur-parser");
+const {klausurHTML} = require("../klausur-parser");
 const timerController = require('../controllers/timerController');
 
 let klausurStatus = false;
@@ -7,7 +7,7 @@ let klausurStatus = false;
 
 class KlausurController{
     changeStatus =  (req,res, next) =>{
-        let data = klausur.getKlausurHTML();
+        let data = klausurHTML.getKlausurHTML();
         if(data.length===0){
             klausurStatus = false;
             apiError.notFound('JSON not found')
@@ -31,7 +31,7 @@ class KlausurController{
     }
 
     getBody = (req,res) => {
-        let data = klausur.getKlausurHTML();
+        let data = klausurHTML.getKlausurHTML();
         res.send(data);
     }
 }

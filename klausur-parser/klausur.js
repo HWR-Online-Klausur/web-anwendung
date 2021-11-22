@@ -1,60 +1,41 @@
-let Klausur = {
-    "dozent": "",
-    "modul": "",
-    "aufgaben": []
-};
+class klausur{
+    constructor() {
+        this.Klausur = {
+            "dozent": "",
+            "modul": "",
+            "aufgaben": []
+        };
+    }
 
-let KlausurHTML = [];
+    setKlausur(pKlausur) {
+        if (pKlausur) {
+            this.Klausur.dozent = pKlausur.dozent;
+            this.Klausur.modul = pKlausur.modul;
 
-function setKlausur(pKlausur) {
-    if (pKlausur) {
-        Klausur.dozent = pKlausur.dozent;
-        Klausur.modul = pKlausur.modul;
-
-        // Stellt sicher, dass jede ID einmalig ist
-        for (const a of pKlausur.aufgaben) {
-            if (Klausur.aufgaben.filter(kaf => kaf.id === a.id).length === 0) {
-                Klausur.aufgaben.push(a);
+            // Stellt sicher, dass jede ID einmalig ist
+            for (const a of pKlausur.aufgaben) {
+                if (this.Klausur.aufgaben.filter(kaf => kaf.id === a.id).length === 0) {
+                    this.Klausur.aufgaben.push(a);
+                }
             }
         }
     }
+
+    getKlausur() {
+        return this.Klausur;
+    }
+
+    getDozent() {
+        return this.Klausur.dozent;
+    }
+
+    getModul() {
+        return this.Klausur.modul;
+    }
+
+    getAufgaben() {
+        return this.Klausur.aufgaben;
+    }
 }
 
-function getKlausur() {
-    return Klausur;
-}
-
-function getDozent() {
-    return Klausur.dozent;
-}
-
-function getModul() {
-    return Klausur.modul;
-}
-
-function getAufgaben() {
-    return Klausur.aufgaben;
-}
-
-function addKlausurHTML(html) {
-    KlausurHTML.push(html);
-}
-
-function clearKlausurHTML() {
-    KlausurHTML = [];
-}
-
-function getKlausurHTML() {
-    return KlausurHTML;
-}
-
-module.exports = {
-    setKlausur,
-    getKlausur,
-    getDozent,
-    getModul,
-    getAufgaben,
-    addKlausurHTML,
-    clearKlausurHTML,
-    getKlausurHTML
-}
+module.exports = new klausur();

@@ -1,4 +1,5 @@
 const klausur = require('./klausur');
+const klausurHTML = require('./klausurHTML');
 
 /**
  *
@@ -7,7 +8,7 @@ const klausur = require('./klausur');
  */
 
 function aufgabenParse() {
-    klausur.clearKlausurHTML();
+    klausurHTML.clearKlausurHTML();
     for (const a of klausur.getAufgaben()) {
         switch (a.methode) {
             case 'multiple-choice':
@@ -34,7 +35,7 @@ function createMultipleChoice(id, fragestellung, antworten) {
     }
     const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div><hr>`;
 
-    klausur.addKlausurHTML(html);
+    klausurHTML.addKlausurHTML(html);
 }
 
 function createSingleChoice(id, fragestellung, antworten) {
@@ -47,12 +48,12 @@ function createSingleChoice(id, fragestellung, antworten) {
     }
     const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div><hr>`;
 
-    klausur.addKlausurHTML(html);
+    klausurHTML.addKlausurHTML(html);
 }
 
 function createText(id, fragestellung) {
     const html = `<div id="${id}-div"><p>${fragestellung}</p><textarea class="form-control" name="${id}"></textarea></div><hr>`;
-    klausur.addKlausurHTML(html);
+    klausurHTML.addKlausurHTML(html);
 }
 
 module.exports = {

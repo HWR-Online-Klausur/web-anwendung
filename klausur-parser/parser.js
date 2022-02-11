@@ -1,29 +1,9 @@
-const klausur = require('./klausur');
-const klausurHTML = require('./klausurHTML');
-
 /**
  *
  *  PARSE OPS
  *
  */
 
-function aufgabenParse() {
-    klausurHTML.clearKlausurHTML();
-    for (const a of klausur.getAufgaben()) {
-        switch (a.methode) {
-            case 'multiple-choice':
-                createMultipleChoice(a.id, a.fragestellung, a.antworten);
-                break;
-            case 'single-choice':
-                createSingleChoice(a.id, a.fragestellung, a.antworten);
-                break;
-            case 'text':
-                createText(a.id, a.fragestellung);
-                break;
-            default: break;
-        }
-    }
-}
 
 function createMultipleChoice(id, fragestellung, antworten) {
     let options = "";
@@ -35,7 +15,7 @@ function createMultipleChoice(id, fragestellung, antworten) {
     }
     const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div><hr>`;
 
-    klausurHTML.addKlausurHTML(html);
+    return html;
 }
 
 function createSingleChoice(id, fragestellung, antworten) {
@@ -48,14 +28,17 @@ function createSingleChoice(id, fragestellung, antworten) {
     }
     const html = `<div id="${id}-div"><p>${fragestellung}</p>${options}</div><hr>`;
 
-    klausurHTML.addKlausurHTML(html);
+    return html;
 }
 
 function createText(id, fragestellung) {
     const html = `<div id="${id}-div"><p>${fragestellung}</p><textarea class="form-control" name="${id}"></textarea></div><hr>`;
-    klausurHTML.addKlausurHTML(html);
+
+    return html;
 }
 
 module.exports = {
-    aufgabenParse
+    createMultipleChoice,
+    createSingleChoice,
+    createText
 }

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const multer = require('multer');
-const { klausur, aufgabenParse } = require('../klausur-parser');
+const { klausur, klausurHTML } = require('../klausur-parser');
 const apiError = require('../errorHandl/apiError');
 
 const storage = multer.diskStorage({
@@ -32,7 +32,7 @@ function jsonRead(path){
     let klausurJson = JSON.parse(rawdata);
     //klausur enthält die notwendige JSON
     klausur.setKlausur(klausurJson);
-    aufgabenParse();
+    klausurHTML.aufgabenParse(klausur.getAufgaben());
 
 }
 

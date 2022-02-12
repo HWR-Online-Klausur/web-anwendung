@@ -1,11 +1,8 @@
-const express = require('express');
-const app = express();
-
-const port = 3000;
-
+const app = require('./app');
 const {connectDB} = require('./db');
 const router = require('./routes');
 const errorHandler = require('./middleware/errorHandlingMiddleware');
+const port = 3000;
 
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
@@ -41,6 +38,7 @@ app.use('/api', router);
 
 //Error handler. Should always be last middleware!
 app.use(errorHandler);
+
 
 const start = async () => {
     await connectDB().then(async () => {

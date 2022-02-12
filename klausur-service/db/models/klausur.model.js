@@ -34,8 +34,11 @@ const KlausurSchema = new mongoose.Schema({
             type: Number,
             required: true
         }
-    }]
-
+    }],
+    finished: {
+        type: Boolean,
+        default: false
+    }
 });
 
 

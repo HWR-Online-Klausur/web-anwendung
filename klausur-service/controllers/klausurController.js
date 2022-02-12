@@ -1,16 +1,9 @@
 const apiError = require('../errorHandl/apiError');
 const {klausurHTML, klausur} = require("../klausur-parser");
 const Klausur = require('../db/models/klausur.model')
+const KlausurService = require('../Service/klausur.service')
 
 class KlausurController{
-
-    // TODO: Stop Bedingung zum löschen der
-
-    //  "123": {
-    //      status: false,
-    //      'klausur': []
-    //   }
-    klausurList = {}
 
     changeStatus = async (req,res, next) => {
         // ID der Klausur in body
@@ -28,16 +21,15 @@ class KlausurController{
                 k.setKlausur(kData)
                 kHTML.aufgabenParse(k.getAufgaben())
 
-                this.klausurList[req.body.klausurID] = {
-                    status: false,
-                    'klausur': kHTML.getKlausurHTML()
-                }
 
-                if (this.klausurList[req.body.klausurID].klausur.length === 0) {
-                    this.klausurList[req.body.klausurID].status = false;
+                KlausurService.setStatus(klausurID, false)
+                KlausurService.setKlausur(klausurID, kHTML.getKlausurHTML())
+
+                if (KlausurService.getKlausur(klausurID).length === 0) {
+                    KlausurService.setStatus(klausurID, false)
                     return next(apiError.notFound('JSON not found'));
                 } else {
-                    this.klausurList[req.body.klausurID].status = true;
+                    KlausurService.setStatus(klausurID, true)
                     next();
                 }
             } else {
@@ -50,7 +42,7 @@ class KlausurController{
 
     klausurStatusSend = (req,res) => {
         const klausurID = req.session.klausurID;
-        const klausur = this.klausurList[klausurID];
+        const klausur = KlausurService.getKlausur(klausurID);
 
         if (klausur) {
             res.send({klausurStatus: klausur.status});
@@ -61,7 +53,7 @@ class KlausurController{
 
     getBody = (req,res, next) => {
         const klausurID = req.session.klausurID;
-        const klausur = this.klausurList[klausurID];
+        const klausur = KlausurService.getKlausur(klausurID);
 
         if (klausur) {
             res.send(klausur.klausur);

@@ -3,14 +3,14 @@
 ## API
 
 ### Timer
-| URL                | METHOD |             PARAMETER              |   ROLE   | DESCR.                                     |                                    RETURN                                     |
-|--------------------|:------:|:----------------------------------:|:--------:|--------------------------------------------|:-----------------------------------------------------------------------------:|
-| /api/timer         | `GET`  |               `none`               |  `none`  | Returns the current timer                  | ```{timerRemain:Date, timeOffset:number, finished:boolean, status:boolean}``` |
-| /api/timer/start   | `POST` |        `{klausurID:string}`        | `dozent` | Starts the timer                           |                                    `none`                                     |
-| /api/timer/reset   | `GET`  |               `none`               | `dozent` | Resets the timer                           |                                    `none`                                     |
-| /api/timer         | `POST` |        `{timerTime:number}`        | `dozent` | Sets the timer time                        |                                    `none`                                     |
-| /api/timer/convert | `POST` | `{minuten:number, stunden:number}` | `dozent` | Sets the timer time with minutes and hours |                                    `none`                                     |
-| /api/timer/add     | `POST` |        `{timerTime:number}`        | `dozent` | Adds time to the timer                     |                                    `none`                                     |
+| URL                   | METHOD |                      PARAMETER                       |   ROLE   | DESCR.                                     |                                    RETURN                                     |
+|-----------------------|:------:|:----------------------------------------------------:|:--------:|--------------------------------------------|:-----------------------------------------------------------------------------:|
+| /api/timer/apiGetTime | `POST` |                 `{klausurID:string}`                 |  `none`  | Returns the current timer                  | ```{timerRemain:Date, timeOffset:number, finished:boolean, status:boolean}``` |
+| /api/timer/start      | `POST` |                 `{klausurID:string}`                 | `dozent` | Starts the timer                           |                                    `none`                                     |
+| /api/timer/reset      | `POST` |               ``{, klausurID:string}``               | `dozent` | Resets the timer                           |                                    `none`                                     |
+| /api/timer            | `POST` |                 `{timerTime:number}`                 | `dozent` | Sets the timer time                        |                                    `none`                                     |
+| /api/timer/convert    | `POST` | `{minuten:number, stunden:number, klausurID:string}` | `dozent` | Sets the timer time with minutes and hours |                                    `none`                                     |
+| /api/timer/add        | `POST` |        `{timerTime:number, klausurID:string}`        | `dozent` | Adds time to the timer                     |                                    `none`                                     |
 
 ### Klausur
 | URL                        | METHOD |     PARAMETER      |   ROLE   | DESCR.                                |          RETURN           |
@@ -25,12 +25,11 @@
 | /api/klausurdata/saveKlausurData | `POST` | `form:Klausur` | `student` | Sends the filled out Klausur | `none` |
 
 ### Data
-| URL                     | METHOD |               PARAMETER                |   ROLE    | DESCR.                                                                 |                    RETURN                     |
-|-------------------------|:------:|:--------------------------------------:|:---------:|------------------------------------------------------------------------|:---------------------------------------------:|
-| /api/data/alluser       | `GET`  |                 `none`                 | `dozent`  | Returns all user (should be only for this klausur)                     |               `[{userSchema}]`                |
-| /api/data/getUpdatePing | `GET`  |                 `none`                 | `dozent`  | Returns ping that users have changed (should be only for this klausur) |            `{updatePing:boolean}`             |
-| /api/data/addStudent       | `POST` | `{name:string, matrikelnummer:string}` | `student` | Adds a new student to klausur                                          | `{'Registrierung erfolgreich abgeschlossen'}` |
-| /api/data/deleteStudent    | `POST` | `{name:string, matrikelnummer:string}` | `student` | Deletes a student                                                      |        `{'User existiert nicht mehr'}`        |
+| URL                      | METHOD |               PARAMETER                |   ROLE    | DESCR.                                 |                    RETURN                     |
+|--------------------------|:------:|:--------------------------------------:|:---------:|----------------------------------------|:---------------------------------------------:|
+| /api/data/getAllStudents | `POST` |          `{klausurID:string}`          | `dozent`  | Returns all user only for this klausur |               `[{userSchema}]`                |
+| /api/data/addStudent     | `POST` | `{name:string, matrikelnummer:string}` | `student` | Adds a new student to klausur          | `{'Registrierung erfolgreich abgeschlossen'}` |
+| /api/data/deleteStudent  | `POST` | `{name:string, matrikelnummer:string}` | `student` | Deletes a student                      |        `{'User existiert nicht mehr'}`        |
 
 ## Klausur JSON
 ```

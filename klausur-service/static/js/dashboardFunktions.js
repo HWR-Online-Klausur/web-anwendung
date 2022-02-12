@@ -13,12 +13,20 @@ jsonKlausurForm.addEventListener('submit',function (e){
         method: 'POST',
         body: formData
     })
-        .then(response => {
-            if(response.status===200){
+        .then(async data => {
+            if (data.status === 200) {
+                const kID = await data.json();
                 input.value = "";
-                document.getElementById('status').innerText="Sie haben die JSON Datei erfolgreich abgeschickt!"
-            }else{
-                document.getElementById('status').innerText="Beim senden der JSON Datei ist ein Problem aufgetreten!"
+                document.getElementById('status').innerText = "Sie haben die JSON Datei erfolgreich abgeschickt!"
+                document.getElementById('klausurID').innerText = "Klausur ID: " + kID.klausurID;
+                // Construct URLSearchParams object instance from current URL querystring.
+                let queryParams = new URLSearchParams(window.location.search);
+                // Set new or modify existing parameter value.
+                queryParams.set("ID", kID.klausurID);
+                history.replaceState(null, null, "?"+queryParams.toString());
+
+            } else {
+                document.getElementById('status').innerText = "Beim senden der JSON Datei ist ein Problem aufgetreten!"
             }
         })
         .catch(error => {
@@ -66,12 +74,20 @@ function toggleKlausurEinstellungen(){
 }
 
 function getUsers(){
+    const params = new URLSearchParams(window.location.search);
+    const obj = {'klausurID':params.get("ID")}
     const tableBody = document.getElementById("tableBody");
-    let i = 1;
 
-    tableBody.innerHTML = ``;
-        fetch('/api/data/getAllUser', {
-            method: 'GET'
+
+    setTimeout(()=> {
+
+
+        let i = 1;
+
+        tableBody.innerHTML = ``;
+        fetch('/api/data/getAllStudents', {
+            method: 'POST',
+            body: JSON.stringify(obj)
         })
             .then(res => {
                 return res.json();
@@ -85,22 +101,9 @@ function getUsers(){
             .catch(error => {
                 console.error('Error:', error);
             });
+
+        getUsers()
+    },5000)
 }
 
-function checkUpdatePing(){
-    setTimeout(()=> {
-
-        fetch("/api/data/getUpdatePing")
-            .then(res => {
-                return res.json();
-            })
-            .then(updatePing => {
-                if (updatePing) {
-                    getUsers();
-                }
-            })
-        checkUpdatePing()
-    },100)
-}
-
-checkUpdatePing();
+getUsers();

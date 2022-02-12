@@ -5,6 +5,7 @@ const {klausur} = require('../klausur-parser');
 const apiError = require('../errorHandl/apiError');
 const Klausur = require('../db/models/klausur.model')
 const mongoose = require('mongoose');
+const KlausurService = require('../Service/klausur.service')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -76,9 +77,15 @@ function uploadJSON(req, res, next)
                 'modul': k.getModul(),
                 'dozent': 'DOZENT_ID', //req.dozentID, // FROM MIDDLEWARE
                 'aufgaben': k.getAufgaben()
-            }).save()
-
-            res.sendStatus(200);
+            }).save().then(kDB => {
+                const id = kDB._id
+                KlausurService.setKlausur(id, k)
+                KlausurService.createTimer(id)
+                res.send({klausurID: id})
+            }).catch((e) => {
+                console.log(e)
+                next(apiError.unprocessableEntity('Something went wrong while saving the klausur'))
+            })
         }
 
     })

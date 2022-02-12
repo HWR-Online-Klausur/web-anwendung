@@ -39,25 +39,25 @@
   "aufgaben": [
     {
       "fragestellung": "Welche dieser Zahlen ist größer als 3?",
-      "methode": "multiple-choice",
+      "methode": 2,
       "antworten": ["1", "3", "5", "-12"],
       "id": "ab1"
     },
     {
       "fragestellung": "Schreiben Sie drei Wörter",
-      "methode": "text",
+      "methode": 0,
       "antworten": [],
       "id": "ab2"
     },
     {
       "fragestellung": "Schreiben Sie einen sehr ausführlichen Aufsatz",
-      "methode": "text",
+      "methode": 0,
       "antworten": [],
       "id": "ab3"
     },
     {
       "fragestellung": "Sind Sie ein Roboter?",
-      "methode": "single-choice",
+      "methode": 1,
       "antworten": ["Ja", "Nein"],
       "id": "ab4"
     }

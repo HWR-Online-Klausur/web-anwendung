@@ -1,34 +1,34 @@
 const apiError = require('../errorHandl/apiError');
 
-class TimerController {
+class TimerController{
 
     constructor() {
         this.timerStart = Date.now();
         this.timerTime = 60 * 60 * 1000;
 
-        this.status = false;
-        this.finished = false;
+        this.stat = Boolean(false);
+        this.finished = Boolean(false);
     }
 
-    setTime(m) {
+    setTime = (m) => {
         this.timerTime = m * 60 * 1000;
     }
 
-    startTimer() {
-        if (!this.status) {
-            this.status = true;
+    startTimer = () => {
+        if (!this.stat) {
+            this.stat = true;
             this.timerStart = Date.now();
         }
     }
 
-    addTime(m) {
+    addTime = (m) => {
         this.timerTime += m * 60 * 1000;
         if (m > 0) {
             this.finished = false;
         }
     }
 
-    apiSetTimeMinutes(req, res) {
+    apiSetTimeMinutes = (req, res, next) => {
         try {
             const stunden = Number(req.body.stunden);
             const minuten = Number(req.body.minuten);
@@ -37,14 +37,14 @@ class TimerController {
                 this.setTime(time);
                 res.sendStatus(200);
             } else {
-                res.sendStatus(400);
+                return next(apiError.badRequest('Minuten or Stunden are missing'))
             }
         } catch (_) {
             res.sendStatus(400);
         }
     }
 
-    apiSetTime(req, res) {
+    apiSetTime = (req, res) => {
         try {
             const time = Number(req.body.timerTime);
             if (time) {
@@ -58,13 +58,13 @@ class TimerController {
         }
     }
 
-    apiStartTimer(req, res) {
+    apiStartTimer = (req, res) => {
         this.startTimer();
         res.sendStatus(200);
     }
 
-    apiGetTime(req, res) {
-        if (!this.finished && this.status) {
+    apiGetTime = (req, res) => {
+        if (!this.finished && this.stat) {
             const tempNow = Date.now();
             const tempStart = new Date(this.timerStart);
 
@@ -75,22 +75,22 @@ class TimerController {
             if (timerRemain <= 0) {
                 this.finished = true;
             }
-            res.send({timerRemain, timeOffset, status: this.status, finished: this.finished});
+            res.send({timerRemain, timeOffset, status: this.stat, finished: this.finished});
         } else if (!this.finished) {
             const timeOffset = new Date().getTimezoneOffset();
-            res.send({timerRemain: this.timerTime, timeOffset, status: this.status, finished: this.finished});
+            res.send({timerRemain: this.timerTime, timeOffset, status: this.stat, finished: this.finished});
         } else {
-            this.status = false;
-            res.send({status: this.status, finished: this.finished});
+            this.stat = false;
+            res.send({status: this.stat, finished: this.finished});
         }
     }
 
-    apiResetTimer(req, res) {
-        this.status = false;
+    apiResetTimer = (req, res) => {
+        this.stat = false;
         res.sendStatus(200);
     }
 
-    apiAddTime(req, res) {
+    apiAddTime = (req, res) => {
         try {
             const time = Number(req.body.timerTime);
             this.addTime(time);
@@ -100,7 +100,7 @@ class TimerController {
         }
     }
 
-    convertTime(stunden, minuten) {
+    convertTime = (stunden, minuten) => {
         return Number(stunden) * 60 + Number(minuten)
     }
 

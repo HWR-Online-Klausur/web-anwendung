@@ -42,6 +42,24 @@ class UserController {
         }
     }
 
+    async CheckKlausurID(req, res, next){
+        if (req.session && req.session.klausurID){
+            await Klausur.findOne({
+                _id: req.session.klausurID
+            }).then((data)=>{
+                if (data){
+                    next();
+                }else{
+                    res.redirect('/');
+                }
+            }).catch(()=>{
+                res.redirect('/');
+            })
+        }else {
+            res.redirect('/');
+        }
+    }
+
     async deleteStudent(req, res, next){
         if (req.method === 'POST'){
             let name, matrikelnummer;

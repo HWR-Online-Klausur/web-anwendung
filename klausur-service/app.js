@@ -7,6 +7,8 @@ const MongoStore = require('connect-mongo')
 const router = require('./routes');
 const errorHandler = require('./middleware/errorHandlingMiddleware');
 
+const userController = require('./controllers/userController');
+
 //region Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -31,7 +33,7 @@ const sess = session({
 })
 
 app.use(sess)
-
+app.get('/klausur.html',userController.CheckKlausurID, express.static(__dirname + "/static"));
 app.use(express.static(__dirname + "/static"));
 app.use('/api', router);
 //endregion Middleware

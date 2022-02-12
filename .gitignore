@@ -115,3 +115,4 @@ fabric.properties
 .idea
 
 node_modules
+db_volume

@@ -90,4 +90,4 @@ class TimerController{
 
 }
 
-module.exports = TimerController;
+module.exports = new TimerController();

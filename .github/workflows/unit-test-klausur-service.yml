@@ -6,8 +6,8 @@ name: Klausur Service Unit Test CI
 on: [push, pull_request]
 
 jobs:
-  build:
-
+  run-unit-test:
+    name: Klausur Service Unit Test
     runs-on: ubuntu-latest
     
     defaults:
@@ -20,7 +20,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '17'
-    - name: Setup and run tests
-      run: |
-        npm ci
-        npm test
+    - name: Setup tests
+      run: npm ci
+    - name: Run test
+      run: npm test

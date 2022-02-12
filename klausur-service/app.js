@@ -19,8 +19,8 @@ const store = MongoStore.create({
 const sess = session({
     name: 'onlineklausur.sid',
     secret: 'safesecret',
-    saveUninitialized: true,
-    resave: true, // TODO: SET TO FALSE AFTER KLAUSUR SELECTION IS IMPLEMENTED
+    saveUninitialized: false,
+    resave: true,
     store: store,
     cookie: {
         httpOnly: true,

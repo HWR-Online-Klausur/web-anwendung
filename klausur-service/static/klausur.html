@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- My CSS -->
+    <link rel="stylesheet" type="text/css" href="style/indexStyle.css">
+    <!-- Bootstrap CSS -->
+    <link href="./style/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="./style/js/bootstrap.bundle.min.js"></script>
+
+    <title>HWR Online Klausur</title>
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">HWR-online-klausuren</span>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form class="studentDataForm">
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="studentenNameInput" placeholder="Name">
+                    <label for="studentenNameInput">Name</label>
+                </div>
+                <div class="form-floating">
+                    <input class="form-control" id="studentenMatrikelnummerInput" placeholder="Matrikelnummer">
+                    <label for="studentenMatrikelnummerInput">Matrikelnummer</label>
+                </div>
+            </form>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="SwitchCheckNameNummer">
+                <label class="form-check-label" for="SwitchCheckNameNummer">Name und Matrikelnummer speichern und blockieren</label>
+            </div>
+        </div>
+        <div class="col studentDataStatus">
+            <span id="studentDataStatus"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col klausurstatus">
+            <h1>Klausurstatus:</h1> <span id="klausurstatus"></span>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="height: 5000px">
+    <div class="sticky-top">
+        <div class="position-absolute end-0">Zeit: <span id="timer-text"></span></div>
+    </div>
+    <form id="klausurBodyForm">
+        <div id="klausurbody">
+        </div>
+    </form>
+</div>
+<script src="js/klausurFunktions.js"></script>
+<script src="js/timer.js"></script>
+</body>
+</html>

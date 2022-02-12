@@ -1,5 +1,6 @@
 const Student = require('../db/models/student.model');
 const apiError = require('../errorHandl/apiError');
+const Klausur = require("../db/models/klausur.model");
 
 let updatePing = false;
 
@@ -80,6 +81,35 @@ class UserController {
     async getUpdatePing(req,res,next){
         res.send(updatePing);
         updatePing=false;
+    }
+
+    async addStudentKlausurID(req, res, next){
+        if (req.method === 'POST'){
+            let klausurID;
+            try{
+                klausurID = req.body.klausurID;
+            }catch (_){
+                return next(apiError.badRequest('Etwas ist schief gelaufen'));
+            }
+
+            if(klausurID){
+                await Klausur.findOne({
+                    _id: klausurID
+                }, (err) =>{
+                    if(err){
+                        return next(apiError.notFound('ID not found'));
+                    }
+                    req.session.klausurID = klausurID;
+                    req.session.save();
+                    res.sendStatus(200);
+                }).catch(()=>{})
+
+            }else{
+                return next(apiError.badRequest('Die Klausur ID wurde nicht gefunden'));
+            }
+        }else{
+            return next(apiError.methodNotAllowed('Methode nicht erlaubt'));
+        }
     }
 }
 

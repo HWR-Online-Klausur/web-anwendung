@@ -61,10 +61,10 @@ class KlausurController{
 
     getBody = (req,res, next) => {
         const klausurID = req.session.klausurID;
-        const klausur = this.klausurList[klausurID].klausur;
+        const klausur = this.klausurList[klausurID];
 
         if (klausur) {
-            res.send(klausur);
+            res.send(klausur.klausur);
         } else {
             return next(apiError.notFound('Klausur not found'));
         }

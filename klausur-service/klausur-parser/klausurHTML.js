@@ -22,13 +22,13 @@ class KlausurHTML{
         try {
             for (const a of klausur) {
                 switch (a.methode) {
-                    case 'multiple-choice':
+                    case 2: // Multiple-Choice
                         this.addKlausurHTML(createMultipleChoice(a.id, a.fragestellung, a.antworten));
                         break;
-                    case 'single-choice':
+                    case 1: // Single-Choice
                         this.addKlausurHTML(createSingleChoice(a.id, a.fragestellung, a.antworten));
                         break;
-                    case 'text':
+                    case 0: // Text
                         this.addKlausurHTML(createText(a.id, a.fragestellung));
                         break;
                     default: break;

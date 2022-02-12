@@ -3,13 +3,14 @@
 ## API
 
 ### Timer
-| URL              | METHOD |      PARAMETER       |   ROLE   | DESCR.                    |                                    RETURN                                     |
-|------------------|:------:|:--------------------:|:--------:|---------------------------|:-----------------------------------------------------------------------------:|
-| /api/timer       | `GET`  |        `none`        |  `none`  | Returns the current timer | ```{timerRemain:Date, timeOffset:number, finished:boolean, status:boolean}``` |
-| /api/timer/start | `GET`  |        `none`        | `dozent` | Starts the timer          |                                    `none`                                     |
-| /api/timer/reset | `GET`  |        `none`        | `dozent` | Resets the timer          |                                    `none`                                     |
-| /api/timer       | `POST` | `{timerTime:number}` | `dozent` | Sets the timer time       |                                    `none`                                     |
-| /api/timer/add   | `POST` | `{timerTime:number}` | `dozent` | Adds time to the timer    |                                    `none`                                     |
+| URL                | METHOD |             PARAMETER              |   ROLE   | DESCR.                                     |                                    RETURN                                     |
+|--------------------|:------:|:----------------------------------:|:--------:|--------------------------------------------|:-----------------------------------------------------------------------------:|
+| /api/timer         | `GET`  |               `none`               |  `none`  | Returns the current timer                  | ```{timerRemain:Date, timeOffset:number, finished:boolean, status:boolean}``` |
+| /api/timer/start   | `GET`  |               `none`               | `dozent` | Starts the timer                           |                                    `none`                                     |
+| /api/timer/reset   | `GET`  |               `none`               | `dozent` | Resets the timer                           |                                    `none`                                     |
+| /api/timer         | `POST` |        `{timerTime:number}`        | `dozent` | Sets the timer time                        |                                    `none`                                     |
+| /api/timer/convert | `POST` | `{minuten:number, stunden:number}` | `dozent` | Sets the timer time with minutes and hours |                                    `none`                                     |
+| /api/timer/add     | `POST` |        `{timerTime:number}`        | `dozent` | Adds time to the timer                     |                                    `none`                                     |
 
 ### Klausur
 | URL                        | METHOD |     PARAMETER      |   ROLE   | DESCR.                                |          RETURN           |

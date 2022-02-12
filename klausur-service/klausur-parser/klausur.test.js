@@ -1,6 +1,12 @@
 const klausur = require('./klausur');
 const assert = require("assert");
 
+describe('Fail', () => {
+    test('this', () => {
+        assert(false)
+    })
+})
+
 describe('klausur: constructor',() => {
     test('the attributes dozent, modul and aufgaben should be empty', () =>{
         assert.deepEqual(klausur,{

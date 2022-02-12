@@ -43,7 +43,7 @@ class TimerController{
     }
 
     apiStartTimer(req, res) {
-        startTimer();
+        this.startTimer();
         res.sendStatus(200);
     }
 

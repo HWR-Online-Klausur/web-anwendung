@@ -23,6 +23,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Setup and run tests
+      working-directory: ./klausur-service
       run: |
         npm ci
         npm test

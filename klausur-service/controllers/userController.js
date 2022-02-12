@@ -1,10 +1,10 @@
-const User = require('../db/models/user.model');
+const Student = require('../db/models/student.model');
 const apiError = require('../errorHandl/apiError');
 
 let updatePing = false;
 
 class UserController {
-    async addUser(req,res,next){
+    async addStudent(req, res, next){
         if (req.method === 'POST'){
             let name, matrikelnummer;
             try{
@@ -15,7 +15,7 @@ class UserController {
             }
 
             if(name && matrikelnummer){
-                await new User({
+                await new Student({
                     'name': name,
                     'matrikelnummer': matrikelnummer
                 })
@@ -39,7 +39,7 @@ class UserController {
         }
     }
 
-    async deleteUser(req,res,next){
+    async deleteStudent(req, res, next){
         if (req.method === 'POST'){
             let name, matrikelnummer;
             try{
@@ -50,7 +50,7 @@ class UserController {
             }
 
             if(name && matrikelnummer){
-                await User.deleteOne({
+                await Student.deleteOne({
                     'name': name,
                     'matrikelnummer': matrikelnummer
                 }, (err) => {
@@ -67,8 +67,8 @@ class UserController {
 
     }
 
-    async findAllUser(req,res,next){
-        await User.find({}, (err, data) =>{
+    async findAllStudents(req, res, next){
+        await Student.find({}, (err, data) =>{
             if(err){
                 return next(apiError.internalServerError('Unerwarteter Fehler'));
             }

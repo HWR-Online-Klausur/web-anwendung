@@ -1,13 +1,22 @@
-class klausur{
-    constructor() {
-        this.dozent = "";
-        this.modul = "";
-        this.aufgaben =  [];
+class klausur {
 
+    constructor(pKlausur) {
+        if (pKlausur) {
+            this.titel = pKlausur.titel;
+            this.dozent = pKlausur.dozent;
+            this.modul = pKlausur.modul;
+            this.aufgaben = [...pKlausur.aufgaben];
+        } else {
+            this.titel = "";
+            this.dozent = "";
+            this.modul = "";
+            this.aufgaben =  [];
+        }
     }
 
     setKlausur(pKlausur) {
         if (pKlausur) {
+            this.titel = pKlausur.titel
             this.dozent = pKlausur.dozent;
             this.modul = pKlausur.modul;
 
@@ -35,6 +44,10 @@ class klausur{
     getAufgaben() {
         return this.aufgaben;
     }
+
+    getTitel() {
+        return this.titel;
+    }
 }
 
-module.exports = new klausur();
+module.exports = klausur;

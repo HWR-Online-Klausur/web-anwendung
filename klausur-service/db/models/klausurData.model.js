@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 //Define a schema
 const KlausurDataSchema = new mongoose.Schema({
+    klausurID:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Klausur'
+    },
     name:{
         type: String,
         minlength: 3,
@@ -23,11 +28,29 @@ const KlausurDataSchema = new mongoose.Schema({
         antworten:{
             type: String,
             required: true
+        },
+        id:{
+            type: String,
+            required: true
+        },
+        methode:{
+            type: Number,
+            required: true
         }
-    }]
-
+    }],
+    zeitpunkt: {
+        type: Date,
+        required: true
+    }
 });
 
+KlausurDataSchema.pre('save', function (next) {
+    let user = this
+
+    user.zeitpunkt = Date.now()
+
+    next()
+})
 
 //Create Model
 const KlausurData = mongoose.model('KlausurData', KlausurDataSchema);

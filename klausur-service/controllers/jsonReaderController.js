@@ -1,8 +1,10 @@
 const fs = require("fs");
 const {v4: uuidv4} = require("uuid");
 const multer = require('multer');
-const {klausur, klausurHTML} = require('../klausur-parser');
+const {klausur} = require('../klausur-parser');
 const apiError = require('../errorHandl/apiError');
+const Klausur = require('../db/models/klausur.model')
+const mongoose = require('mongoose');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -29,10 +31,9 @@ const upload = multer({storage: storage, fileFilter: fileFilter}).single("jsonKl
 function jsonRead(path) {
     let rawdata = fs.readFileSync(path);
     let klausurJson = JSON.parse(rawdata);
-    //klausur enthält die notwendige JSON
-    klausur.setKlausur(klausurJson);
-    klausurHTML.aufgabenParse(klausur.getAufgaben());
-
+    //k enthält die notwendige JSON
+    let k = new klausur(klausurJson);
+    return k;
 }
 
 function jsonDelete(path) {
@@ -60,17 +61,23 @@ function checkFolder(req, res, next)
 
 function uploadJSON(req, res, next)
 {
-    upload(req, res, function (err) {
+    upload(req, res, async function (err) {
         let filedata = req.file;
         if (filedata === undefined) {
             return next(apiError.badRequest('Etwas ist schief gelaufen. Bitte versuche es erneut'));
         } else {
             const FileName = req.file.filename;
             const path = `./klausuren/${FileName}`;
-            jsonRead(path);
+            const k = jsonRead(path);
             jsonDelete(path);
 
-            // IN DB EINTRAGEN
+            await new Klausur({
+                'titel': k.getTitel(),
+                'modul': k.getModul(),
+                'dozent': 'DOZENT_ID', //req.dozentID, // FROM MIDDLEWARE
+                'aufgaben': k.getAufgaben()
+            }).save()
+
             res.sendStatus(200);
         }
 

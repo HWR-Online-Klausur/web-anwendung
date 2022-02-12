@@ -2,9 +2,9 @@ const Router = require('express');
 const router = new Router;
 const userController = require('../controllers/userController');
 
-router.post('/addUser', userController.addUser);
-router.post('/deleteUser', userController.deleteUser);
-router.get('/getAllUser', userController.findAllUser);
+router.post('/addStudent', userController.addStudent);
+router.post('/deleteStudent', userController.deleteStudent);
+router.get('/getAllUser', userController.findAllStudents);
 router.get('/getUpdatePing', userController.getUpdatePing);
 
 module.exports = router;

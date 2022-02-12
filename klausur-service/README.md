@@ -6,7 +6,7 @@
 | URL                | METHOD |             PARAMETER              |   ROLE   | DESCR.                                     |                                    RETURN                                     |
 |--------------------|:------:|:----------------------------------:|:--------:|--------------------------------------------|:-----------------------------------------------------------------------------:|
 | /api/timer         | `GET`  |               `none`               |  `none`  | Returns the current timer                  | ```{timerRemain:Date, timeOffset:number, finished:boolean, status:boolean}``` |
-| /api/timer/start   | `GET`  |               `none`               | `dozent` | Starts the timer                           |                                    `none`                                     |
+| /api/timer/start   | `POST` |        `{klausurID:string}`        | `dozent` | Starts the timer                           |                                    `none`                                     |
 | /api/timer/reset   | `GET`  |               `none`               | `dozent` | Resets the timer                           |                                    `none`                                     |
 | /api/timer         | `POST` |        `{timerTime:number}`        | `dozent` | Sets the timer time                        |                                    `none`                                     |
 | /api/timer/convert | `POST` | `{minuten:number, stunden:number}` | `dozent` | Sets the timer time with minutes and hours |                                    `none`                                     |
@@ -17,7 +17,7 @@
 |----------------------------|:------:|:------------------:|:--------:|---------------------------------------|:-------------------------:|
 | /api/klausur/klausurStatus | `GET`  |       `none`       |  `none`  | Returns if the klausur is started     | `{klausurStatus:boolean}` |
 | /api/klausur/getBody       | `GET`  |       `none`       |  `none`  | Returns the body for the Klausur html |      `<html></html>`      |
-| /api/klausur/jsonRead      | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                   |          `none`           |
+| /api/klausur/upload        | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                   |          `none`           |
 
 ### Klausur Data
 | URL                              | METHOD |   PARAMETER    |   ROLE    | DESCR.                       | RETURN |
@@ -29,12 +29,13 @@
 |-------------------------|:------:|:--------------------------------------:|:---------:|------------------------------------------------------------------------|:---------------------------------------------:|
 | /api/data/alluser       | `GET`  |                 `none`                 | `dozent`  | Returns all user (should be only for this klausur)                     |               `[{userSchema}]`                |
 | /api/data/getUpdatePing | `GET`  |                 `none`                 | `dozent`  | Returns ping that users have changed (should be only for this klausur) |            `{updatePing:boolean}`             |
-| /api/data/addUser       | `POST` | `{name:string, matrikelnummer:string}` | `student` | Adds a new student to klausur                                          | `{'Registrierung erfolgreich abgeschlossen'}` |
-| /api/data/deleteUser    | `POST` | `{name:string, matrikelnummer:string}` | `student` | Deletes a student                                                      |        `{'User existiert nicht mehr'}`        |
+| /api/data/addStudent       | `POST` | `{name:string, matrikelnummer:string}` | `student` | Adds a new student to klausur                                          | `{'Registrierung erfolgreich abgeschlossen'}` |
+| /api/data/deleteStudent    | `POST` | `{name:string, matrikelnummer:string}` | `student` | Deletes a student                                                      |        `{'User existiert nicht mehr'}`        |
 
 ## Klausur JSON
 ```
 {
+  "titel": "Ein Titel",
   "dozent": "Dr. Dev",
   "modul": "IT-1234",
   "aufgaben": [

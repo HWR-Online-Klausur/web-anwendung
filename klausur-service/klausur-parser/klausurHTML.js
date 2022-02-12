@@ -40,4 +40,4 @@ class KlausurHTML{
     }
 }
 
-module.exports = new KlausurHTML();
+module.exports = KlausurHTML;

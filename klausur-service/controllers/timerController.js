@@ -1,6 +1,6 @@
 const apiError = require('../errorHandl/apiError');
 
-class TimerController{
+class TimerController {
 
     constructor() {
         this.timerStart = Date.now();
@@ -25,6 +25,22 @@ class TimerController{
         this.timerTime += m * 60 * 1000;
         if (m > 0) {
             this.finished = false;
+        }
+    }
+
+    apiSetTimeMinutes(req, res) {
+        try {
+            const stunden = Number(req.body.stunden);
+            const minuten = Number(req.body.minuten);
+            const time = this.convertTime(stunden, minuten);
+            if (time) {
+                this.setTime(time);
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(400);
+            }
+        } catch (_) {
+            res.sendStatus(400);
         }
     }
 
@@ -84,8 +100,8 @@ class TimerController{
         }
     }
 
-    convertTime(stunden, minuten){
-        return Number(stunden)*60 + Number(minuten)
+    convertTime(stunden, minuten) {
+        return Number(stunden) * 60 + Number(minuten)
     }
 
 }

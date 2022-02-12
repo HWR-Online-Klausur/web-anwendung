@@ -22,14 +22,6 @@ class KlausurController{
         res.send(klausurStatus);
     }
 
-    setTime = (req,res) => {
-        let stunden = req.body.stunden;
-        let minuten = req.body.minuten;
-        let time = timerController.convertTime(stunden, minuten);
-        timerController.setTime(time);
-        res.sendStatus(200);
-    }
-
     getBody = (req,res) => {
         let data = klausurHTML.getKlausurHTML();
         res.send(data);

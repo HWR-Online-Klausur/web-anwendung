@@ -8,7 +8,6 @@ class TimerController{
 
         this.stat = Boolean(false);
         this.finished = Boolean(false);
-        console.log(this)
     }
 
     setTime = (m) => {
@@ -65,7 +64,6 @@ class TimerController{
     }
 
     apiGetTime = (req, res) => {
-        console.log(this)
         if (!this.finished && this.stat) {
             const tempNow = Date.now();
             const tempStart = new Date(this.timerStart);

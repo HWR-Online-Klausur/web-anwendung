@@ -2,7 +2,7 @@ const klausur = require('./klausur');
 const assert = require("assert");
 
 describe('Fail', () => {
-    test('and this', () => {
+    test('this', () => {
         expect(false).toBeTruthy()
     })
 })

@@ -3,10 +3,16 @@ services:
   web:
     depends_on:
       - db
-    build: .
+    build: klausur-service
+    environment:
+      - DB_URI=mongodb://db:27017
     ports:
     - "80:3000"
   db:
-    image: mongo:4.2.16-rc0
+    image: mongo:4.4.11-rc1
     volumes:
       - ./db_volume:/data/db
+
+# nginx mit ssl evtl.
+# micro-service
+# network

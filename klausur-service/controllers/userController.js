@@ -7,18 +7,20 @@ let updatePing = false;
 class UserController {
     async addStudent(req, res, next){
         if (req.method === 'POST'){
-            let name, matrikelnummer;
+            let name, matrikelnummer, klausurID;
             try{
                 name = req.body.name;
                 matrikelnummer = req.body.matrikelnummer;
+                klausurID = req.session.klausurID
             }catch (_){
                 return next(apiError.badRequest('Etwas ist schief gelaufen'));
             }
 
-            if(name && matrikelnummer){
+            if(name && matrikelnummer && klausurID){
                 await new Student({
                     'name': name,
-                    'matrikelnummer': matrikelnummer
+                    'matrikelnummer': matrikelnummer,
+                    'klausurID': klausurID
                 })
                     .save((err) => {
                     if (err) {

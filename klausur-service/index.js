@@ -23,7 +23,7 @@ const sess = session({
     name: 'onlineklausur.sid',
     secret: 'safesecret',
     saveUninitialized: true,
-    resave: true,
+    resave: true, // TODO: SET TO FALSE AFTER KLAUSUR SELECTION IS IMPLEMENTED
     store: store,
     cookie: {
         httpOnly: true,

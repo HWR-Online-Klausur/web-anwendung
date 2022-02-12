@@ -1,1 +1,1 @@
-[![Klausur Service Unit Test CI](https://github.com/HWR-Online-Klausur/web-anwendung/actions/workflows/unit-test-klausur-service.yml/badge.svg?branch=main)](https://github.com/HWR-Online-Klausur/web-anwendung/actions/workflows/unit-test-klausur-service.yml)
+[![Klausur Service Unit Test CI](https://github.com/HWR-Online-Klausur/web-anwendung/actions/workflows/klausur-service-unit-test.yml/badge.svg?branch=main)](https://github.com/HWR-Online-Klausur/web-anwendung/actions/workflows/klausur-service-unit-test.yml)

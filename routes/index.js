@@ -1,4 +1,3 @@
-//This feature doesn't work yet! 15.08.21
 const Router = require('express');
 const router = new Router;
 

@@ -1,36 +1,38 @@
 const apiError = require('../errorHandl/apiError');
 
-let timerStart;
-let timerTime = 60 * 60 * 1000;
-
-let status = false;
-let finished = false;
-
-function setTime(m) {
-    timerTime = m * 60 * 1000;
-}
-
-function startTimer() {
-    if (!status) {
-        status = true;
-        timerStart = Date.now();
-    }
-}
-
-function addTime(m) {
-    timerTime += m * 60 * 1000;
-    if (m > 0) {
-        finished = false;
-    }
-}
-
 class TimerController{
+
+    constructor() {
+        this.timerStart = Date.now();
+        this.timerTime = 60 * 60 * 1000;
+
+        this.status = false;
+        this.finished = false;
+    }
+
+    setTime(m) {
+        this.timerTime = m * 60 * 1000;
+    }
+
+    startTimer() {
+        if (!this.status) {
+            this.status = true;
+            this.timerStart = Date.now();
+        }
+    }
+
+    addTime(m) {
+        this.timerTime += m * 60 * 1000;
+        if (m > 0) {
+            this.finished = false;
+        }
+    }
 
     apiSetTime(req, res) {
         try {
             const time = Number(req.body.timerTime);
             if (time) {
-                setTime(time);
+                this.setTime(time);
                 res.sendStatus(200);
             } else {
                 res.sendStatus(400);
@@ -46,46 +48,46 @@ class TimerController{
     }
 
     apiGetTime(req, res) {
-        if (!finished && status) {
+        if (!this.finished && this.status) {
             const tempNow = Date.now();
-            const tempStart = new Date(timerStart);
+            const tempStart = new Date(this.timerStart);
 
             const tempDiff = new Date(tempNow - tempStart);
-            const timerRemain = new Date(timerTime - tempDiff);
+            const timerRemain = new Date(this.timerTime - tempDiff);
             const timeOffset = new Date().getTimezoneOffset();
 
             if (timerRemain <= 0) {
-                finished = true;
+                this.finished = true;
             }
-            res.send({timerRemain, timeOffset, status, finished});
-        } else if (!finished) {
+            res.send({timerRemain, timeOffset, status: this.status, finished: this.finished});
+        } else if (!this.finished) {
             const timeOffset = new Date().getTimezoneOffset();
-            res.send({timerRemain: timerTime, timeOffset, status, finished});
+            res.send({timerRemain: this.timerTime, timeOffset, status: this.status, finished: this.finished});
         } else {
-            status = false;
-            res.send({status, finished});
+            this.status = false;
+            res.send({status: this.status, finished: this.finished});
         }
     }
 
     apiResetTimer(req, res) {
-        status = false;
+        this.status = false;
         res.sendStatus(200);
     }
 
     apiAddTime(req, res) {
         try {
             const time = Number(req.body.timerTime);
-            addTime(time);
+            this.addTime(time);
             res.sendStatus(200);
         } catch (_) {
             res.sendStatus(400);
         }
     }
 
-    konvertTime(stunden, minuten){
+    convertTime(stunden, minuten){
         return Number(stunden)*60 + Number(minuten)
     }
 
 }
 
-module.exports = new TimerController();
+module.exports = TimerController;

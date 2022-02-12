@@ -25,7 +25,7 @@ class KlausurController{
     setTime = (req,res) => {
         let stunden = req.body.stunden;
         let minuten = req.body.minuten;
-        let time = timerController.konvertTime(stunden, minuten);
+        let time = timerController.convertTime(stunden, minuten);
         timerController.setTime(time);
         res.sendStatus(200);
     }

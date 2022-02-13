@@ -1,6 +1,7 @@
 const apiError = require('../errorHandl/apiError');
 const klausurData = require("../db/models/klausurData.model");
 const Klausur = require('../db/models/klausur.model');
+const Dozent = require('../db/models/dozent.model')
 require("../db/models/klausur.model");
 const axios = require("axios");
 const mongoose = require("mongoose");
@@ -10,7 +11,7 @@ class klausurAbgabeController {
     async saveKlausurData(req, res, next) {
         //console.log(req.body)
         if (req.method === 'POST'){
-            let klausurID, name, matrikelnummer, aufgaben, data;
+            let klausurID, name, matrikelnummer, aufgaben, data, dozent;
             try{
                 klausurID = req.session.klausurID;
                 name = req.body.name;
@@ -25,17 +26,30 @@ class klausurAbgabeController {
                         }
                     }).catch(()=>{})
                 }
+
+                if(data){
+                  if(data.dozent){
+                      dozent = await Dozent.findOne({
+                          "_id": data.dozent
+                      }).then((name)=>{
+                          if (name){
+                              return name
+                          }
+                      }).catch(()=>{})
+                  }
+                }
+
             }catch (_){
                 return next(apiError.badRequest('Etwas ist schief gelaufen'));
             }
 
             if(data){
-                if (data.titel && data.modul && data.dozent){
+                if (data.titel && data.modul && dozent.name){
                     await new klausurData({
                         'klausurID': klausurID,
                         'titel': data.titel,
                         'modul': data.modul,
-                        'dozent': data.dozent,
+                        'dozent': dozent.name,
                         'name': name,
                         'matrikelnummer': matrikelnummer,
                         'aufgaben': aufgaben

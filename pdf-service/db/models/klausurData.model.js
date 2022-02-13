@@ -17,7 +17,7 @@ const KlausurDataSchema = new mongoose.Schema({
         required: true
     },
     dozent:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
     },
     name:{

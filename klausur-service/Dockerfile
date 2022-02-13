@@ -11,7 +11,7 @@ COPY index.js /hwr-klausur/
 COPY package.json /hwr-klausur/
 COPY package-lock.json /hwr-klausur/
 RUN cd /hwr-klausur/ \
-    && npm install
+    && npm ci
 WORKDIR /hwr-klausur
 EXPOSE 3000
 CMD ["npm", "run", "start"]

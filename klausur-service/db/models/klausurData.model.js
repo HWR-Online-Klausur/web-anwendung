@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const KlausurDataSchema = new mongoose.Schema({
     klausurID:{
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Klausur'
+        required: true
     },
     name:{
         type: String,

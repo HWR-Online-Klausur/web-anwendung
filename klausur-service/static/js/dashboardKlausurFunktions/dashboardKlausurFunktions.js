@@ -1,8 +1,7 @@
-
 // Fetch-Funktion für die Klausur-Uploading
 const jsonKlausurForm = document.getElementById('jsonKlausurForm');
 
-jsonKlausurForm.addEventListener('submit',function (e){
+jsonKlausurForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const input = document.getElementById('jsonKlausur');
@@ -23,7 +22,7 @@ jsonKlausurForm.addEventListener('submit',function (e){
                 let queryParams = new URLSearchParams(window.location.search);
                 // Set new or modify existing parameter value.
                 queryParams.set("ID", kID.klausurID);
-                history.replaceState(null, null, "?"+queryParams.toString());
+                history.replaceState(null, null, "?" + queryParams.toString());
 
             } else {
                 document.getElementById('status').innerText = "Beim senden der JSON Datei ist ein Problem aufgetreten!"
@@ -39,7 +38,7 @@ jsonKlausurForm.addEventListener('submit',function (e){
 const zeitKlausurForm = document.getElementById('zeitKlausurForm');
 
 
-zeitKlausurForm.addEventListener('submit',function (e){
+zeitKlausurForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const stunden = document.getElementById("stunden").value;
@@ -60,44 +59,34 @@ zeitKlausurForm.addEventListener('submit',function (e){
 
 //Klausur-Einstellungen Schließen/Öffnen
 
-function toggleKlausurEinstellungen(){
+function toggleKlausurEinstellungen() {
     const toggleKlausurEinstellungenButton = document.getElementById("toggleKlausurEinstellungenButton");
     const divKlausurEinstellungeg = document.getElementById("divKlausurEinstellungeg");
-    if(divKlausurEinstellungeg.hidden){
+    if (divKlausurEinstellungeg.hidden) {
         divKlausurEinstellungeg.hidden = false;
         toggleKlausurEinstellungenButton.innerHTML = `Klausur Einstellungen schließen<img src='style/icons/arrow-up-circle-fill.svg'>`
-    }else{
+    } else {
         divKlausurEinstellungeg.hidden = true;
         toggleKlausurEinstellungenButton.innerHTML = `Klausur Einstellungen öffnen<img src='style/icons/arrow-down-circle-fill.svg'>`
     }
 
 }
 
-function download(klausurID, matrnr) {
-    fetch('/api/klausurData/downloadKlausurData', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            'klausurID': klausurID,
-            'matrikelnummer': matrnr
-        })
-    })
-}
-
-function getUsers(){
+function getUsers() {
     const params = new URLSearchParams(window.location.search);
-    const obj = {'klausurID':params.get("ID")}
+    const obj = {'klausurID': params.get("ID")}
     const tableBody = document.getElementById("tableBody");
 
-    setTimeout(()=> {
+    setTimeout(() => {
 
         let i = 1;
 
         tableBody.innerHTML = ``;
         fetch('/api/user/getAllStudents', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(obj)
         })
             .then(res => {
@@ -105,7 +94,7 @@ function getUsers(){
             })
             .then(data => {
                 for (let key in data) {
-                    tableBody.innerHTML += `<tr><th scope="row">${i}</th><td>${data[key].name}</td><td><button onclick="download(${data[key].klausurID}, ${data[key].matrnr})">Herunterladen</button></td></tr>`
+                    tableBody.innerHTML += `<tr><th scope="row">${i}</th><td>${data[key].name}</td><td><button id="${data[key].matrikelnummer}" onclick="download('${data[key].klausurID}', '${data[key].matrikelnummer}', '${data[key].name}')">Herunterladen</button></td></tr>`
                     i++;
                 }
             })
@@ -114,7 +103,47 @@ function getUsers(){
             });
 
         getUsers()
-    },5000)
+    }, 5000)
+}
+
+download = (klausurID, matrnr, name) => {
+    fetch('/api/klausurData/downloadKlausurData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'klausurID': klausurID,
+            'matrikelnummer': matrnr
+        })
+    }).then(async data => {
+        if (data.status === 200) {
+            return await data.blob()
+        }
+        else {
+            throw 'Failed'
+        }
+    })
+        .then(resObj => {
+            const newBlob = new Blob([resObj], { type: 'application/pdf' });
+
+            // MS Edge and IE don't allow using a blob object directly as link href, instead it is necessary to use msSaveOrOpenBlob
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                window.navigator.msSaveOrOpenBlob(newBlob);
+            } else {
+                // For other browsers: create a link pointing to the ObjectURL containing the blob.
+                const objUrl = window.URL.createObjectURL(newBlob);
+
+                let link = document.createElement('a');
+                link.href = objUrl;
+                link.download = name + '.pdf';
+                link.click();
+
+                // For Firefox it is necessary to delay revoking the ObjectURL.
+                setTimeout(() => { window.URL.revokeObjectURL(objUrl); }, 250);
+            }
+        })
+        .catch(e => console.error(e))
 }
 
 getUsers();

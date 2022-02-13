@@ -40,8 +40,7 @@ app.get('/get/:id', async (req, res) => {
 
         await KlausurData.findOne({
             _id: req.params.id
-        }).populate('klausurID')
-            .then(k => {
+        }).then(k => {
                 const aufgaben = []
                 let i = 1
                 for (const a of k.aufgaben) {
@@ -69,10 +68,12 @@ app.get('/get/:id', async (req, res) => {
 
                 latex(r).pipe(out)
                     .on('finish', () => {
+                        res.setHeader('Content-Type', 'application/pdf')
                         res.sendFile(__dirname + `/pdf/${req.params.id}.pdf`)
                     })
             })
-            .catch(() => {
+            .catch((e) => {
+                console.log(e)
                 res.sendStatus(404)
             })
     }

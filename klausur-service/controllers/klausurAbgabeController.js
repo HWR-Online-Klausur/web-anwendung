@@ -1,11 +1,13 @@
 const apiError = require('../errorHandl/apiError');
 const klausurData = require("../db/models/klausurData.model");
+require("../db/models/klausur.model");
 const axios = require("axios");
+const mongoose = require("mongoose");
 
 
 class klausurAbgabeController {
     //TODO:überlegen wie wir Daten speicher. Vllt id's ändern oder so
-    async saveKlausurData(req,res,next){
+    async saveKlausurData(req, res, next) {
         //All data are in req.body
         console.log(req.body)
         // if (req.method === 'POST'){
@@ -41,27 +43,31 @@ class klausurAbgabeController {
     downloadKlausur = async (req, res, next) => {
         let klausurID, matrnr;
         try {
-            klausurID = req.body.klausurID
-            matrnr = req.body.matrikelnummer
+            klausurID = String(req.body.klausurID)
+            matrnr = String(req.body.matrikelnummer)
         } catch (_) {
             return next(apiError.badRequest('Etwas ist schief gelaufen'));
         }
 
-        if(klausurID && matrnr){
+        if (klausurID && matrnr) {
             klausurData.findOne({
                 'matrikelnummer': matrnr,
                 'klausurID': klausurID
             }).then((kData) => {
                 const id = kData._id
 
-                axios.get(process.env.PDF_SERVICE_URI + '/get/' + id)
+                axios.get(process.env.PDF_SERVICE_URI + '/get/' + id, {
+                    responseType: 'stream'
+                })
                     .then((data) => {
-                        const file = data.data
-                        res.setHeader('Content-Disposition', `attachment; ${kData.name}.pdf`)
-                        res.pipe(file)
+                        data.data.pipe(res)
                     })
+                    .catch(() => {
+                    })
+            }).catch(() => {
+                return next(apiError.notFound('Keine Klausur mit den daten gefunden'))
             })
-        }else{
+        } else {
             return next(apiError.badRequest('Daten sind nicht eingegeben, bitte wiederholen Sie die Anfrage'));
         }
     }

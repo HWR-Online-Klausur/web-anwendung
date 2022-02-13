@@ -3,11 +3,21 @@ services:
   web:
     depends_on:
       - db
+      - pdf
     build: klausur-service
     environment:
       - DB_URI=mongodb://db:27017
+      - PDF_SERVICE_URI=http://pdf:4000
     ports:
     - "80:3000"
+  pdf:
+    depends_on:
+      - db
+    build: pdf-service
+    environment:
+      - DB_URI=mongodb://db:27017
+    volumes:
+      - ./pdf_volume:/hwr-service/pdf
   db:
     image: mongo:4.4.11-rc1
     volumes:

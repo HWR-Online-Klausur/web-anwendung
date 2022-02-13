@@ -5,6 +5,7 @@ const path = require('path')
 const templateFile = require('template-file')
 const latex = require('node-latex')
 const KlausurData = require('./db/models/klausurData.model')
+const Klausur = require('./db/models/klausur.model')
 const {connectDB} = require("./db");
 
 const port = 4000;
@@ -40,38 +41,42 @@ app.get('/get/:id', async (req, res) => {
 
         await KlausurData.findOne({
             _id: req.params.id
-        }).then(k => {
-                const aufgaben = []
-                let i = 1
-                for (const a of k.aufgaben) {
-                    aufgaben.push({
-                        'index': i,
-                        'fragestellung': a.fragestellung,
-                        'antworten': a.antworten
-                    })
-                    i++
-                }
+        }).then(async k => {
 
-                const r = templateFile.render(template, {
-                    'name': k.name,
-                    'matrnr': k.matrikelnummer,
-                    'titel': k.klausurID.titel,
-                    'modul': k.klausurID.modul,
-                    'dozent': k.klausurID.dozent,
-                    'abgabe': k.zeitpunkt,
-                    'aufgaben': aufgaben
+            const kID = await Klausur.findOne({
+                _id: k.klausurID
+            }).then(kl => kl)
+            const aufgaben = []
+            let i = 1
+            for (const a of k.aufgaben) {
+                aufgaben.push({
+                    'index': i,
+                    'fragestellung': a.fragestellung,
+                    'antworten': a.antworten
                 })
-                    .replaceAll('#(#', '{')
-                    .replaceAll('#)#', '}')
+                i++
+            }
 
-                const out = fs.createWriteStream(path.join(`pdf/${req.params.id}.pdf`))
-
-                latex(r).pipe(out)
-                    .on('finish', () => {
-                        res.setHeader('Content-Type', 'application/pdf')
-                        res.sendFile(__dirname + `/pdf/${req.params.id}.pdf`)
-                    })
+            const r = templateFile.render(template, {
+                'name': k.name,
+                'matrnr': k.matrikelnummer,
+                'titel': kID.titel,
+                'modul': kID.modul,
+                'dozent': kID.dozent,
+                'abgabe': k.zeitpunkt,
+                'aufgaben': aufgaben
             })
+                .replaceAll('#(#', '{')
+                .replaceAll('#)#', '}')
+
+            const out = fs.createWriteStream(path.join(`pdf/${req.params.id}.pdf`))
+
+            latex(r).pipe(out)
+                .on('finish', () => {
+                    res.setHeader('Content-Type', 'application/pdf')
+                    res.sendFile(__dirname + `/pdf/${req.params.id}.pdf`)
+                })
+        })
             .catch((e) => {
                 console.log(e)
                 res.sendStatus(404)

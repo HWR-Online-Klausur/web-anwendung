@@ -26,3 +26,8 @@ KlausurIDForm.addEventListener('submit',function (e){
             console.error('Error:', error);
         });
 })
+
+function goToLogin(){
+    location.replace("/dashboard.html")
+}
+

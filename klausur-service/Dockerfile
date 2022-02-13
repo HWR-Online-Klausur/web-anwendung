@@ -1,4 +1,4 @@
-FROM node:17.3-alpine3.14
+FROM node:16.14-alpine3.14
 COPY controllers/ /hwr-klausur/controllers/
 COPY db/ /hwr-klausur/db/
 COPY errorHandl/ /hwr-klausur/errorHandl/

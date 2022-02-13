@@ -1,4 +1,4 @@
-FROM node:17.3-alpine3.14
+FROM node:16.14-alpine3.14
 COPY db/ /hwr-service/db/
 COPY pdf/ /hwr-service/pdf/
 COPY template/ /hwr-service/template/

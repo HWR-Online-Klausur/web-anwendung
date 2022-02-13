@@ -42,10 +42,6 @@ app.get('/get/:id', async (req, res) => {
         await KlausurData.findOne({
             _id: req.params.id
         }).then(async k => {
-
-            const kID = await Klausur.findOne({
-                _id: k.klausurID
-            }).then(kl => kl)
             const aufgaben = []
             let i = 1
             for (const a of k.aufgaben) {
@@ -60,9 +56,9 @@ app.get('/get/:id', async (req, res) => {
             const r = templateFile.render(template, {
                 'name': k.name,
                 'matrnr': k.matrikelnummer,
-                'titel': kID.titel,
-                'modul': kID.modul,
-                'dozent': kID.dozent,
+                'titel': k.titel,
+                'modul': k.modul,
+                'dozent': k.dozent,
                 'abgabe': k.zeitpunkt,
                 'aufgaben': aufgaben
             })

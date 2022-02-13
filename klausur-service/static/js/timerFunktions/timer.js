@@ -6,7 +6,8 @@ let timeOffset;
 let status;
 let ended = false;
 
-let obj;
+const params = new URLSearchParams(window.location.search);
+const klausurID = params.get("ID")
 
 function getTime() {
     if (element) {
@@ -21,8 +22,7 @@ function getTime() {
             });
     } else if (dozentElement){
 
-        const params = new URLSearchParams(window.location.search);
-        obj = {'klausurID': params.get("ID")}
+        const obj = {'klausurID': params.get("ID")}
 
         fetch('/api/timer/apiGetTime', {
             method: 'POST',
@@ -62,7 +62,7 @@ function setText(pElement) {
 
 function setTimer() {
     const e = document.getElementById('settime-text');
-    const val = {timerTime: e.value};
+    const val = {timerTime: e.value, klausurID: klausurID};
 
     if (val.timerTime) {
         fetch('/api/timer', {
@@ -71,13 +71,13 @@ function setTimer() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(val)
-        });
+        }).catch(() => {});
     }
 }
 
 function addTimer() {
     const e = document.getElementById('addtime-text');
-    const val = {timerTime: e.value};
+    const val = {timerTime: e.value, klausurID: klausurID};
 
     if (val.timerTime) {
         fetch('/api/timer/add', {
@@ -86,7 +86,7 @@ function addTimer() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(val)
-        });
+        }).catch(() => {});
     }
 }
 
@@ -119,7 +119,15 @@ function startTimer() {
             if(data.length===0){
                 alert('Laden Sie die Klausur');
             }else{
-                fetch('/api/timer/start');
+                fetch('/api/timer/start', {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        klausurID: klausurID
+                    })
+                }).catch(() => {});
             }
         })
         .catch(error => {
@@ -128,7 +136,15 @@ function startTimer() {
 }
 
 function resetTimer() {
-    fetch('/api/timer/reset');
+    fetch('/api/timer/reset', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+            body: JSON.stringify({
+            klausurID: klausurID
+        })
+    }).catch(() => {});
 }
 
 /**

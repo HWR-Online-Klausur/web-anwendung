@@ -1,0 +1,35 @@
+\documentclass[11pt]{article}
+
+\newcommand{\studentname}{[[name]]}
+\newcommand{\studentmatrikelnummer}{[[matrnr]]}
+
+\newcommand{\klausurtitel}{[[titel]]}
+\newcommand{\klausurmodul}{[[modul]]}
+\newcommand{\klausurdozent}{[[dozent]]}
+\newcommand{\klausurabgabe}{[[abgabe]]}
+
+\begin{document}
+
+\begin{center}
+    \huge{\textbf{\klausurtitel}}\\
+    \vspace{1cm}
+    \normalsize
+    Modul: \klausurmodul\\
+    Dozent: \klausurdozent\\
+    \vspace{2cm}
+    Student: \studentname\\
+    Matrikel Nummer: \studentmatrikelnummer\\
+    Abgabe: \klausurabgabe
+\end{center}
+\newpage
+Aufgaben:\\
+\\
+\vspace{1cm}
+[[#aufgaben]]
+Frage: [[index]]\\
+Fragestellung: [[fragestellung]]\\
+Antworten: [[antworten]]\\
+\vspace{1cm}
+[[/aufgaben]]
+
+\end{document}

@@ -180,6 +180,7 @@ class UserController {
 
                     Dozent.findByCredentials(mail, password)
                         .then(user =>{
+                            req.session.DozentDBID = user._id;
                             return user.generateSession();
                         })
                         .then(id =>{
@@ -215,6 +216,24 @@ class UserController {
             })
         }else {
             res.redirect('/login.html');
+        }
+    }
+
+    async CheckDozentIDApi(req, res, next){
+        if (req.session && req.session.DozentID){
+            await Dozent.findOne({
+                "session.token": req.session.DozentID
+            }).then((data)=>{
+                if (data){
+                    next();
+                }else{
+                    return next(apiError.Unauthorized('You shall not pass'))
+                }
+            }).catch(()=>{
+                return next(apiError.Unauthorized('You shall not pass'))
+            })
+        }else {
+            return next(apiError.Unauthorized('You shall not pass'))
         }
     }
 }

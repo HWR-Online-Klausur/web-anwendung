@@ -75,7 +75,7 @@ function uploadJSON(req, res, next)
             await new Klausur({
                 'titel': k.getTitel(),
                 'modul': k.getModul(),
-                'dozent': 'DOZENT_ID', //req.dozentID, // FROM MIDDLEWARE
+                'dozent': req.session.DozentDBID,
                 'aufgaben': k.getAufgaben()
             }).save().then(kDB => {
                 const id = kDB._id

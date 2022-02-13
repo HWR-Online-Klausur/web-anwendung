@@ -19,7 +19,7 @@ LoginDataForm.addEventListener('submit',function (e){
     })
         .then(response => {
             if(response.status===200){
-                location.replace("/dashboard.html")
+                location.replace("/dashboardKlausur.html")
             }else{
                 status.innerHTML = `<div class="alert alert-danger" role="alert">Mail oder Password sind falsh!</div>`;
             }

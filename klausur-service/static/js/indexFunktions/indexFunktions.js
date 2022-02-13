@@ -28,6 +28,6 @@ KlausurIDForm.addEventListener('submit',function (e){
 })
 
 function goToLogin(){
-    location.replace("/dashboard.html")
+    location.replace("/dashboardKlausur.html")
 }
 

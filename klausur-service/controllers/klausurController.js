@@ -2,6 +2,7 @@ const apiError = require('../errorHandl/apiError');
 const {klausurHTML, klausur} = require("../klausur-parser");
 const Klausur = require('../db/models/klausur.model')
 const KlausurService = require('../Service/klausur.service')
+const Student = require("../db/models/student.model");
 
 class KlausurController{
 
@@ -60,6 +61,21 @@ class KlausurController{
         } else {
             return next(apiError.notFound('Klausur not found'));
         }
+    }
+
+    getAllKlausuren = (req, res, next) => {
+        let DozentDBID;
+        try{
+            DozentDBID = req.session.DozentDBID;
+        }catch (_){
+            return next(apiError.badRequest('DozentDBID nicht gefunden'));
+        }
+        Klausur.find({'dozent': DozentDBID}, (err, data) =>{
+            if(err){
+                return next(apiError.internalServerError('Unerwarteter Fehler'));
+            }
+            res.status(200).send(data);
+        });
     }
 }
 

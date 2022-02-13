@@ -13,7 +13,7 @@ const KlausurSchema = new mongoose.Schema({
         required: true
     },
     dozent:{
-        type: String, //mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Dozent'
     },

@@ -116,3 +116,4 @@ fabric.properties
 
 node_modules
 db_volume
+*.pdf

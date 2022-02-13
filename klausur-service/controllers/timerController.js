@@ -57,7 +57,7 @@ class TimerController{
     apiGetTimeDozent = (req, res) => {
         const klausurID = req.body.klausurID;
 
-        getTime(klausurID, res)
+        this.getTime(klausurID, res)
     }
 
     getTime = (klausurID, res) => {

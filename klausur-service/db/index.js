@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+const KlausurService = require('../Service/klausur.service')
+const Klausur = require('./models/klausur.model')
 
 //Create connection
 const connectDB = async() => {
@@ -11,8 +12,21 @@ const connectDB = async() => {
             useUnifiedTopology: true,
             useCreateIndex: true,
             useFindAndModify: false
-        }).then(() => {
+        }).then(async () => {
             console.log("Erfolgreiche Datenbankverbindung");
+            await Klausur.find({
+                finished: false
+            }, (error, result) => {
+                for (const k of result) {
+                    KlausurService.setKlausur(k._id, {
+                        titel: k.titel,
+                        modul: k.modul,
+                        dozent: k.dozent,
+                        aufgaben: k.aufgaben
+                    })
+                    KlausurService.createTimer(k._id)
+                }
+            })
         }).catch((e) => {
             console.log("Fehler beim Verbinden mit der Datenbank");
             console.log(e);

@@ -7,7 +7,7 @@ KlausurIDForm.addEventListener('submit',function (e){
     const klausurID = document.getElementById("KlausurIDInput");
     const status = document.getElementById("KlausurIDDataStatus");
 
-    fetch('/api/data/addStudentKlausurID', {
+    fetch('/api/user/addStudentKlausurID', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

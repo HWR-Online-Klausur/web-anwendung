@@ -2,11 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- My CSS -->
+    <link rel="stylesheet" type="text/css" href="style/indexStyle.css">
+    <!-- Bootstrap CSS -->
+    <link href="./style/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="./style/js/bootstrap.bundle.min.js"></script>
+
+    <title>HWR Online Klausur</title>
 </head>
 <body>
 
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">HWR-online-klausuren</span>
+    </div>
+</nav>
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form id="LoginDataForm">
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dozentMailInput" type="email" placeholder="Mail">
+                    <label for="dozentMailInput">Mail</label>
+                </div>
+                <div class="form-floating">
+                    <input class="form-control" id="dozentPasswordInput" type="password" placeholder="Password">
+                    <label for="dozentPasswordInput">Password</label>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="col LoginStatus">
+            <span id="LoginStatus"></span>
+        </div>
+    </div>
+</div>
+mail:
+<br>
+Dozent@dozent.com
+<br>
+pass:
+<br>
+DozentIstSuper
+
+<script src="js/loginFunktions/loginFunktions.js"></script>
 </body>
-
 </html>

@@ -1,4 +1,5 @@
 const Student = require('../db/models/student.model');
+const Dozent = require('../db/models/dozent.model');
 const apiError = require('../errorHandl/apiError');
 const Klausur = require("../db/models/klausur.model");
 
@@ -125,6 +126,95 @@ class UserController {
             }
         }else{
             return next(apiError.methodNotAllowed('Methode nicht erlaubt'));
+        }
+    }
+
+    async addDozent(req, res, next){
+        if (req.method === 'POST'){
+            let mail, password, name;
+            try{
+                mail = req.body.mail;
+                password = req.body.password;
+                name = req.body.name;
+            }catch (_){
+                return next(apiError.badRequest('Etwas ist schief gelaufen'));
+            }
+
+            if(mail && password && name){
+                await new Dozent({
+                    'mail': mail,
+                    'password': password,
+                    'name': name
+                })
+                    .save((err) => {
+                        if (err) {
+                            if (err.name === 'MongoError' && err.code === 11000) {
+                                // Duplicate mail
+                                return next(apiError.unprocessableEntity('Dieser User existiert bereits'));
+                            }
+                            // Some other error
+                            return next(apiError.unprocessableEntity('Fehler beim Speichern des Users'));
+                        }
+                        res.status(200).json('Registrierung erfolgreich abgeschlossen');
+                    })
+            }else{
+                return next(apiError.badRequest('die Mail, der Name oder Password sind nicht angegeben, bitte wiederholen Sie die Anfrage'));
+            }
+        }else{
+            return next(apiError.methodNotAllowed('Methode nicht erlaubt'));
+        }
+    }
+
+    async loginDozent(req, res, next){
+        if (req.method === 'POST'){
+            let mail, password;
+
+            try{
+                mail = req.body.mail;
+                password = req.body.password;
+            }catch (_){
+                return next(apiError.badRequest('Etwas ist schief gelaufen'));
+            }
+
+            if (mail && password) {
+
+                    Dozent.findByCredentials(mail, password)
+                        .then(user =>{
+                            return user.generateSession();
+                        })
+                        .then(id =>{
+                            req.session.DozentID = id;
+                            req.session.save();
+                            res.sendStatus(200);
+                        })
+                        .catch(()=>{
+                            return next(apiError.notFound('User wurde nicht gefunden!'))
+                    })
+
+            } else {
+                return next(apiError.badRequest('Mail oder Password sind falsh'));
+            }
+        }else{
+            return next(apiError.badRequest('Methode nicht erlaubt'));
+        }
+
+    }
+
+    async CheckDozentID(req, res, next){
+        if (req.session && req.session.DozentID){
+            await Dozent.findOne({
+                "session.token": req.session.DozentID
+            }).then((data)=>{
+                if (data){
+                    next();
+                }else{
+                    res.redirect('/login.html');
+                }
+            }).catch(()=>{
+                res.redirect('/login.html');
+            })
+        }else {
+            res.redirect('/login.html');
         }
     }
 }

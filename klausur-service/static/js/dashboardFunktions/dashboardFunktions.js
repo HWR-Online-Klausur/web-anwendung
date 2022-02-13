@@ -78,14 +78,12 @@ function getUsers(){
     const obj = {'klausurID':params.get("ID")}
     const tableBody = document.getElementById("tableBody");
 
-
     setTimeout(()=> {
-
 
         let i = 1;
 
         tableBody.innerHTML = ``;
-        fetch('/api/data/getAllStudents', {
+        fetch('/api/user/getAllStudents', {
             method: 'POST',
             body: JSON.stringify(obj)
         })

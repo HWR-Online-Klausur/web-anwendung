@@ -13,7 +13,7 @@ function updateDataStatus() {
         inputName.setAttribute("disabled", "true");
         inputNummer.setAttribute("disabled", "true");
 
-        fetch('/api/data/addStudent', {
+        fetch('/api/user/addStudent', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -128,7 +128,7 @@ function deleteUser(){
     const status = document.getElementById("studentDataStatus");
     const inputName = document.getElementById("studentenNameInput");
     const inputNummer = document.getElementById("studentenMatrikelnummerInput");
-    fetch('/api/data/deleteStudent', {
+    fetch('/api/user/deleteStudent', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

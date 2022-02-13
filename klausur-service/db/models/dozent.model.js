@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require("bcrypt");
+const {v4: uuidv4} = require("uuid");
 
 //Define a schema
 const DozentSchema = new mongoose.Schema({
@@ -47,11 +48,11 @@ DozentSchema.methods.generateSession = async function () {
     return id
 }
 
-DozentSchema.statics.findByCredentials = function (name, password) {
+DozentSchema.statics.findByCredentials = function (mail, password) {
     let User = this;
     return User.findOne({
-        name: {
-            $regex : new RegExp(name, "i") }
+        mail: {
+            $regex : new RegExp(mail, "i") }
     }).then((user) => {
         if (!user)
             return Promise.reject();

@@ -147,3 +147,14 @@ download = (klausurID, matrnr, name) => {
 }
 
 getUsers();
+
+function goToDashboard(){
+    location.replace("/dashboard.html")
+
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    let params = new URLSearchParams(document.location.search);
+    let ID = params.get("ID");
+    document.getElementById('klausurID').innerText = "Klausur ID: " + ID;
+}, false);

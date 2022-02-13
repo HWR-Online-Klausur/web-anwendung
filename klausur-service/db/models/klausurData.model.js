@@ -6,6 +6,20 @@ const KlausurDataSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    titel:{
+        type: String,
+        required: true,
+        trim: true
+    },
+    modul:{
+        type: String,
+        trim: true,
+        required: true
+    },
+    dozent:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
     name:{
         type: String,
         minlength: 3,
@@ -24,10 +38,10 @@ const KlausurDataSchema = new mongoose.Schema({
             type: String,
             required: true
         },
-        antworten:{
+        antworten:[{
             type: String,
             required: true
-        },
+        }],
         id:{
             type: String,
             required: true
@@ -39,7 +53,8 @@ const KlausurDataSchema = new mongoose.Schema({
     }],
     zeitpunkt: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now()
     }
 });
 

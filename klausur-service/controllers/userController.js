@@ -58,6 +58,24 @@ class UserController {
         }
     }
 
+    async CheckKlausurIDAPI(req, res, next){
+        if (req.session && req.session.klausurID){
+            await Klausur.findOne({
+                _id: req.session.klausurID
+            }).then((data)=>{
+                if (data){
+                    next();
+                }else{
+                    return next(apiError.Unauthorized('You shall not pass'))
+                }
+            }).catch(()=>{
+                return next(apiError.Unauthorized('You shall not pass'))
+            })
+        }else {
+            return next(apiError.Unauthorized('You shall not pass'))
+        }
+    }
+
     async deleteStudent(req, res, next){
         if (req.method === 'POST'){
             let name, matrikelnummer;

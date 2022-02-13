@@ -3,10 +3,12 @@ COPY controllers/ /hwr-klausur/controllers/
 COPY db/ /hwr-klausur/db/
 COPY errorHandl/ /hwr-klausur/errorHandl/
 COPY klausur-parser/ /hwr-klausur/klausur-parser/
-COPY klausuren/ /hwr-klausur/klausuren/
 COPY middleware/ /hwr-klausur/middleware/
 COPY routes/ /hwr-klausur/routes/
+COPY Service/ /hwr-klausur/Service/
 COPY static/ /hwr-klausur/static/
+COPY Timer/ /hwr-klausur/Timer/
+COPY app.js /hwr-klausur/
 COPY index.js /hwr-klausur/
 COPY package.json /hwr-klausur/
 COPY package-lock.json /hwr-klausur/

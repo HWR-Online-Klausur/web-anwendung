@@ -6,6 +6,20 @@ const KlausurDataSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    titel:{
+        type: String,
+        required: true,
+        trim: true
+    },
+    modul:{
+        type: String,
+        trim: true,
+        required: true
+    },
+    dozent:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
     name:{
         type: String,
         minlength: 3,
@@ -57,3 +71,4 @@ const KlausurData = mongoose.model('KlausurData', KlausurDataSchema);
 
 //Export Model
 module.exports = KlausurData;
+

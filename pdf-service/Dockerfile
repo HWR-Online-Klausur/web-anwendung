@@ -7,6 +7,7 @@ COPY package.json /hwr-service/
 COPY package-lock.json /hwr-service/
 RUN cd /hwr-service/ \
     && npm ci
+RUN apk add texlive
 WORKDIR /hwr-service
 EXPOSE 4000
 CMD ["npm", "run", "start"]

@@ -254,6 +254,40 @@ class UserController {
             return next(apiError.Unauthorized('You shall not pass'))
         }
     }
+
+    async getAllDozents(req, res, next){
+        await Dozent.find({}, (err, data) =>{
+            if(err){
+                return next(apiError.internalServerError('Unerwarteter Fehler'));
+            }
+            res.status(200).send(data);
+        });
+    }
+
+    async deleteDozent(req, res, next){
+        if (req.method === 'POST'){
+            let mail;
+            try{
+                mail = req.body.mail;
+            }catch (_){
+                return next(apiError.badRequest('Etwas ist schief gelaufen'));
+            }
+
+            if(mail){
+                await Dozent.deleteOne({
+                    'mail': mail
+                }, (err) => {
+                    if(err){
+                        return next(apiError.unprocessableEntity('Fehler beim Löschen des Users'));
+                    }
+                    res.status(200).json('User existiert nicht mehr');
+                })
+            }
+        }else{
+            return next(apiError.methodNotAllowed('Methode nicht erlaubt'));
+        }
+
+    }
 }
 
 module.exports = new UserController();

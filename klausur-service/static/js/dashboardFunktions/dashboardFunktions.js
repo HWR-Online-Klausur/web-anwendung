@@ -41,3 +41,11 @@ function goToDashboardKlausurID(param) {
     params.set("ID", param);
     location.replace("/dashboardKlausur.html?"+params.toString())
 }
+
+function createNewKlausur(){
+    location.replace("/dashboardKlausur.html")
+}
+
+function goToAdminPanel(){
+    location.replace("/admin.html")
+}

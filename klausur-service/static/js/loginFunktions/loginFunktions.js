@@ -29,6 +29,3 @@ LoginDataForm.addEventListener('submit',function (e){
         });
 })
 
-function lol (){
-    console.log("123");
-}

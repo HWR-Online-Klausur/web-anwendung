@@ -74,10 +74,9 @@ function toggleKlausurEinstellungen() {
 
 function getUsers() {
     const params = new URLSearchParams(window.location.search);
-    const obj = {'klausurID': params.get("ID")}
+    const ID = params.get("ID");
+    const obj = {'klausurID': ID}
     const tableBody = document.getElementById("tableBody");
-
-    setTimeout(() => {
 
         let i = 1;
 
@@ -94,16 +93,29 @@ function getUsers() {
             })
             .then(data => {
                 for (let key in data) {
-                    tableBody.innerHTML += `<tr><th scope="row">${i}</th><td>${data[key].name}</td><td><button id="${data[key].matrikelnummer}" onclick="download('${data[key].klausurID}', '${data[key].matrikelnummer}', '${data[key].name}')">Herunterladen</button></td></tr>`
-                    i++;
+                    fetch('/api/klausurData/getKlausurData', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'klausurID': ID,
+                            'matrikelnummer': data[key].matrikelnummer
+                        })
+                    }).then(res =>{
+                        if(res.status === 200){
+                            tableBody.innerHTML += `<tr><th scope="row">${i}</th><td>${data[key].name}</td><td>Abgegeben</td><td><button id="${data[key].matrikelnummer}" onclick="download('${data[key].klausurID}', '${data[key].matrikelnummer}', '${data[key].name}')">Herunterladen</button></td></tr>`
+                        }else{
+                            tableBody.innerHTML += `<tr><th scope="row">${i}</th><td>${data[key].name}</td><td>Nicht Abgegeben</td><td><button id="${data[key].matrikelnummer}" onclick="download('${data[key].klausurID}', '${data[key].matrikelnummer}', '${data[key].name}')" disabled>Herunterladen</button></td></tr>`
+                        }
+                        i++;
+                    })
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
 
-        getUsers()
-    }, 5000)
 }
 
 download = (klausurID, matrnr, name) => {
@@ -146,7 +158,7 @@ download = (klausurID, matrnr, name) => {
         .catch(e => console.error(e))
 }
 
-getUsers();
+
 
 function goToDashboard(){
     location.replace("/dashboard.html")

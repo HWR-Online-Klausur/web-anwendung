@@ -106,6 +106,34 @@ class klausurAbgabeController {
             return next(apiError.badRequest('Daten sind nicht eingegeben, bitte wiederholen Sie die Anfrage'));
         }
     }
+
+
+    getKlausurData = async (req, res, next) => {
+        let klausurID, matrnr;
+        try {
+            klausurID = String(req.body.klausurID)
+            matrnr = String(req.body.matrikelnummer)
+        } catch (_) {
+            return next(apiError.badRequest('Etwas ist schief gelaufen'));
+        }
+
+        if (klausurID && matrnr) {
+            klausurData.findOne({
+                'matrikelnummer': matrnr,
+                'klausurID': klausurID
+            }).then((data) => {
+                if (data){
+                    res.status(200).json("Klausur wurde gefunden");
+                }else{
+                    return next(apiError.notFound('Keine Klausur mit den daten gefunden'))
+                }
+            }).catch(() => {
+                return next(apiError.notFound('Keine Klausur mit den daten gefunden'))
+            })
+        } else {
+            return next(apiError.badRequest('Daten sind nicht eingegeben, bitte wiederholen Sie die Anfrage'));
+        }
+    }
 }
 
 module.exports = new klausurAbgabeController();

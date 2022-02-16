@@ -53,13 +53,18 @@ app.get('/get/:id', async (req, res) => {
                 i++
             }
 
+            const datum = k.zeitpunkt.toLocaleDateString('de-DE')
+            const zeit = k.zeitpunkt.toLocaleTimeString('de-DE')
+
+            const abgabeString = datum + ' ' + zeit + ' Uhr'
+
             const r = templateFile.render(template, {
                 'name': k.name,
                 'matrnr': k.matrikelnummer,
                 'titel': k.titel,
                 'modul': k.modul,
                 'dozent': k.dozent,
-                'abgabe': k.zeitpunkt,
+                'abgabe': abgabeString,
                 'aufgaben': aufgaben
             })
                 .replaceAll('#(#', '{')
@@ -75,7 +80,7 @@ app.get('/get/:id', async (req, res) => {
         })
             .catch((e) => {
                 console.log(e)
-                res.sendStatus(404)
+                res.status(404).send(e)
             })
     }
 })

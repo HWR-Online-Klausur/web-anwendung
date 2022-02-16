@@ -10,6 +10,7 @@ const userController = require("../controllers/userController");
 router.post('/saveKlausurData', userController.CheckKlausurIDAPI,klausurAbgabeController.saveKlausurData);
 router.post('/downloadKlausurData', userController.CheckDozentIDApi,klausurAbgabeController.downloadKlausur);
 router.post('/getKlausurData', userController.CheckDozentIDApi,klausurAbgabeController.getKlausurData);
+router.post('/checkIfStudentsPassedKlausur', userController.CheckDozentIDApi,klausurAbgabeController.checkIfStudentsPassedKlausur);
 
 
 module.exports = router;

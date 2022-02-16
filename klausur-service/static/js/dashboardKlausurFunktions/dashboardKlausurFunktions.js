@@ -78,7 +78,8 @@ function getUsers() {
     const obj = {'klausurID': ID}
     const tableBody = document.getElementById("tableBody");
 
-        let i = 1;
+
+    let i = 1;
 
         tableBody.innerHTML = ``;
         fetch('/api/user/getAllStudents', {
@@ -92,8 +93,10 @@ function getUsers() {
                 return res.json();
             })
             .then(data => {
+                let MatrNumCarrier = [];
+
                 for (let key in data) {
-                    fetch('/api/klausurData/getKlausurData', {
+                    fetch('/api/klausurData/checkIfStudentsPassedKlausur', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -110,12 +113,35 @@ function getUsers() {
                         }
                         i++;
                     })
+
+                    MatrNumCarrier.push(data[key].matrikelnummer)
                 }
+
+                fetch('/api/klausurData/getKlausurData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(obj)
+                })
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(dataKlausur => {
+                        for (let n in dataKlausur){
+                            if(MatrNumCarrier.filter(id => id === dataKlausur[n].matrikelnummer).length === 0){
+                                tableBody.innerHTML += `<tr><th scope="row">${i}</th><td>${dataKlausur[n].name}</td><td>Abgegeben</td><td><button id="${dataKlausur[n].matrikelnummer}" onclick="download('${dataKlausur[n].klausurID}', '${dataKlausur[n].matrikelnummer}', '${dataKlausur[n].name}')">Herunterladen</button></td></tr>`
+                            }
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-
 }
 
 download = (klausurID, matrnr, name) => {

@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Run API Tests
         id: run-newman
-        uses: anthonyvscode/newman-action@v2
+        uses: anthonyvscode/newman-action@v1
         with:
           collection: Web_Anwendung_API_Test.postman_collection.json
           reporters: cli

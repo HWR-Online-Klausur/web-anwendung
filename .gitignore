@@ -118,3 +118,7 @@ node_modules
 db_volume
 pdf_volume
 *.pdf
+
+# video and screenshot of the tests from Cypress
+./e2e/screenshots
+./e2e/videos

@@ -34,6 +34,7 @@ jobs:
         id: run-newman
         uses: anthonyvscode/newman-action@v1
         with:
+          command: npm run dev
           collection: "klausur-service/Postman/Web_Anwendung_API_Test.postman_collection.json"
           reporters: cli
 

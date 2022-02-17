@@ -9,7 +9,7 @@ jobs:
   run-unit-test:
     name: Klausur Service Unit Test
     runs-on: ubuntu-latest
-    
+
     defaults:
       run:
         working-directory: ./klausur-service
@@ -24,3 +24,20 @@ jobs:
       run: npm ci
     - name: Run test
       run: npm test
+
+  api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run API Tests
+        id: run-newman
+        uses: anthonyvscode/newman-action@v2
+        with:
+          collection: Web_Anwendung_API_Test.postman_collection.json
+          reporters: cli
+
+      - name: Output summary to console
+        run: echo ${{ steps.run-newman.outputs.summary }}
+
+

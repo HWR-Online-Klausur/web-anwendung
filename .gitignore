@@ -120,5 +120,5 @@ pdf_volume
 *.pdf
 
 # video and screenshot of the tests from Cypress
-./klausur-service/e2e/screenshots
-./klausur-service/e2e/videos
+klausur-service/e2e/screenshots
+klausur-service/e2e/videos

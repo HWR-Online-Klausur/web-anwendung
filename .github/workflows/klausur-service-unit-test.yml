@@ -34,7 +34,7 @@ jobs:
         id: run-newman
         uses: anthonyvscode/newman-action@v1
         with:
-          collection: Web_Anwendung_API_Test.postman_collection.json
+          collection: Postman/Web_Anwendung_API_Test.postman_collection.json
           reporters: cli
 
       - name: Output summary to console

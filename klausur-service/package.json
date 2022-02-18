@@ -7,7 +7,8 @@
     "test": "jest",
     "start": "node index.js",
     "dev": "nodemon",
-    "api-test" : "newman run Postman/Web_Anwendung_API_Test.postman_collection.json"
+    "api-test": "newman run Postman/Web_Anwendung_API_Test.postman_collection.json",
+    "api-test-ci": "start-server-and-test dev http://localhost:3000 api-test"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "jest": "^27.3.1",
     "newman": "^5.3.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "start-server-and-test": "^1.14.0"
   }
 }

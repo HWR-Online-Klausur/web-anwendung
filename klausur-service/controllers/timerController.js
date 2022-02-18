@@ -1,6 +1,5 @@
 const apiError = require('../errorHandl/apiError');
 const KlausurService = require('../Service/klausur.service')
-const Timer = require('../Timer/Timer.Class')
 
 class TimerController{
 

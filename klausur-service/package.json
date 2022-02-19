@@ -33,6 +33,8 @@
     "nodemon": "^2.0.15"
   },
   "jest": {
-    "modulePathIgnorePatterns": ["<rootDir>/e2e/"]
+    "modulePathIgnorePatterns": [
+      "<rootDir>/e2e/"
+    ]
   }
 }

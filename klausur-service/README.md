@@ -9,7 +9,7 @@
 | /api/timer/apiGetTime | `POST` |                 `{klausurID:string}`                 |  `none`  | Returns the current timer                        | ```{timerRemain:Date, timeOffset:number, finished:boolean, status:boolean}``` |
 | /api/timer/start      | `POST` |                 `{klausurID:string}`                 | `dozent` | Starts the timer                                 |                                    `none`                                     |
 | /api/timer/reset      | `POST` |               ``{klausurID:string}``               | `dozent` | Resets the timer                                 |                                    `none`                                     |
-| /api/timer            | `POST` |                 `{timerTime:number}`                 | `dozent` | Sets the timer time                              |                                    `none`                                     |
+| /api/timer            | `POST` |                 `{klausurID:string, timerTime:number}`                 | `dozent` | Sets the timer time                              |                                    `none`                                     |
 | /api/timer/convert    | `POST` | `{minuten:number, stunden:number, klausurID:string}` | `dozent` | Sets the timer time with minutes and hours       |                                    `none`                                     |
 | /api/timer/add        | `POST` |        `{timerTime:number, klausurID:string}`        | `dozent` | Adds time to the timer                           |                                    `none`                                     |
 

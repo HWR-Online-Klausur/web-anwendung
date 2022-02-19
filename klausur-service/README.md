@@ -8,17 +8,18 @@
 | /api/timer            | `GET`  |                        `none`                        |  `none`  | Returns the current timer (klausurID in session) | ```{timerRemain:Date, timeOffset:number, finished:boolean, status:boolean}``` |
 | /api/timer/apiGetTime | `POST` |                 `{klausurID:string}`                 |  `none`  | Returns the current timer                        | ```{timerRemain:Date, timeOffset:number, finished:boolean, status:boolean}``` |
 | /api/timer/start      | `POST` |                 `{klausurID:string}`                 | `dozent` | Starts the timer                                 |                                    `none`                                     |
-| /api/timer/reset      | `POST` |               ``{klausurID:string}``               | `dozent` | Resets the timer                                 |                                    `none`                                     |
-| /api/timer            | `POST` |                 `{klausurID:string, timerTime:number}`                 | `dozent` | Sets the timer time                              |                                    `none`                                     |
+| /api/timer/reset      | `POST` |                ``{klausurID:string}``                | `dozent` | Resets the timer                                 |                                    `none`                                     |
+| /api/timer            | `POST` |        `{klausurID:string, timerTime:number}`        | `dozent` | Sets the timer time                              |                                    `none`                                     |
 | /api/timer/convert    | `POST` | `{minuten:number, stunden:number, klausurID:string}` | `dozent` | Sets the timer time with minutes and hours       |                                    `none`                                     |
 | /api/timer/add        | `POST` |        `{timerTime:number, klausurID:string}`        | `dozent` | Adds time to the timer                           |                                    `none`                                     |
 
 ### Klausur
-| URL                        | METHOD |     PARAMETER      |   ROLE   | DESCR.                                |          RETURN           |
-|----------------------------|:------:|:------------------:|:--------:|---------------------------------------|:-------------------------:|
-| /api/klausur/klausurStatus | `GET`  |       `none`       |  `none`  | Returns if the klausur is started     | `{klausurStatus:boolean}` |
-| /api/klausur/getBody       | `GET`  |       `none`       |  `none`  | Returns the body for the Klausur html |      `<html></html>`      |
-| /api/klausur/upload        | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                   |          `none`           |
+| URL                          | METHOD |     PARAMETER      |   ROLE   | DESCR.                                                                      |          RETURN           |
+|------------------------------|:------:|:------------------:|:--------:|-----------------------------------------------------------------------------|:-------------------------:|
+| /api/klausur/klausurStatus   | `GET`  |       `none`       |  `none`  | Returns if the klausur is started                                           | `{klausurStatus:boolean}` |
+| /api/klausur/getBody         | `GET`  |       `none`       |  `none`  | Returns the body for the Klausur html                                       |      `<html></html>`      |
+| /api/klausur/upload          | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                                                         |          `none`           |
+| /api/klausur/getAllKlausuren | `POST` |       `none`       | `dozent` | Returns all Klausuren of the Dozent (requires DozentDBID in session cookie) |   `[file:KlausurJSON]`    |
 
 ### Klausur Data
 | URL                              | METHOD |   PARAMETER    |   ROLE    | DESCR.                       | RETURN |

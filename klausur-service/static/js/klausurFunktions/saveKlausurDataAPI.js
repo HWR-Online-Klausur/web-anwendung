@@ -10,10 +10,9 @@ function saveKlausurData(){
     })
         .then(response => {
             if(response.status === 200){
-                //TODO: Change it!
-                alert('Yep!');
+                alert('Klausur wurde erfolgreich gespeichert!');
             }else{
-                alert('Ooops...');
+                alert('Beim Speichern ist ein Fehler aufgetreten!');
             }
         })
 }

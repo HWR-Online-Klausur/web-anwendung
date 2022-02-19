@@ -6,7 +6,6 @@ const router = new Router;
 const userController = require("../controllers/userController");
 //const upload = multer()
 
-//router.post('/saveKlausurData',upload.none(), userController.CheckDozentIDApi,klausurAbgabeController.saveKlausurData);
 router.post('/saveKlausurData', userController.CheckKlausurIDAPI,klausurAbgabeController.saveKlausurData);
 router.post('/downloadKlausurData', userController.CheckDozentIDApi,klausurAbgabeController.downloadKlausur);
 router.post('/getKlausurData', userController.CheckDozentIDApi,klausurAbgabeController.getKlausurData);

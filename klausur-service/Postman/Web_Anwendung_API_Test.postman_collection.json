@@ -1,0 +1,340 @@
+{
+	"info": {
+		"_postman_id": "fe34a02e-7975-474b-bff3-f3245061df62",
+		"name": "Web_Anwendung_API_Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User_API",
+			"item": [
+				{
+					"name": "Dozent_API",
+					"item": [
+						{
+							"name": "addDozent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\": \"Test@dozent.com\",\r\n    \"password\": \"DozentIstTest\",\r\n    \"name\": \"Test\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/addDozent",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"addDozent"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteDozent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\": \"Test@dozent.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/deleteDozent",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"deleteDozent"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "loginDozent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"mail\": \"Test@dozent.com\",\r\n    \"password\": \"DozentIstTest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/loginDozent",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"loginDozent"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllDozents",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/getAllDozents",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"getAllDozents"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student_API",
+					"item": [
+						{
+							"name": "addStudentKlausurID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"klausurID\": \"6208604ff2ab9d08ec3356d0\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/user/addStudentKlausurID",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"user",
+										"addStudentKlausurID"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Klausur_API",
+			"item": []
+		},
+		{
+			"name": "KlausurData_API",
+			"item": [
+				{
+					"name": "saveKlausurData",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"klausurID\": \"6208604ff2ab9d08ec3356d0\",\r\n    \"titel\": \"Test Titel\",\r\n    \"modul\": \"IT-1234\",\r\n    \"dozent\":\"Super Dozent\",\r\n    \"name\":\"Name of Student Of Course\",\r\n    \"matrikelnummer\":\"7777612\",\r\n    \"aufgaben\": [{\r\n      \"fragestellung\": \"Welche dieser Zahlen ist größer als 3?\",\r\n      \"methode\": 2,\r\n      \"antworten\": [\"1\", \"3\",\"-12\"],\r\n      \"id\": \"ab1\"\r\n    },\r\n    {\r\n      \"fragestellung\": \"Schreiben Sie drei Wörter\",\r\n      \"methode\": 0,\r\n      \"antworten\": [\"wadsadsasd\"],\r\n      \"id\": \"ab2\"\r\n    },\r\n    {\r\n      \"fragestellung\": \"Schreiben Sie einen sehr ausführlichen Aufsatz\",\r\n      \"methode\": 0,\r\n      \"antworten\": [\"AAAAAAAAAAAAAAAAAA\"],\r\n      \"id\": \"ab3\"\r\n    },\r\n    {\r\n      \"fragestellung\": \"Sind Sie ein Roboter?\",\r\n      \"methode\": 1,\r\n      \"antworten\": [\"Ja\"],\r\n      \"id\": \"ab4\"\r\n    }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/klausurData/saveKlausurData",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"klausurData",
+								"saveKlausurData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getKlausurData",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"klausurID\": \"6208604ff2ab9d08ec3356d0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/klausurData/getKlausurData",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"klausurData",
+								"getKlausurData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "checkIfStudentsPassedKlausur",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"matrikelnummer\": \"11111111111111\",\r\n    \"klausurID\": \"6208604ff2ab9d08ec3356d0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/klausurData/checkIfStudentsPassedKlausur",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"klausurData",
+								"checkIfStudentsPassedKlausur"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Timer_API",
+			"item": []
+		}
+	]
+}

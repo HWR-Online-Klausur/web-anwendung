@@ -16,25 +16,30 @@
 ### Klausur
 | URL                          | METHOD |     PARAMETER      |   ROLE   | DESCR.                                                                      |          RETURN           |
 |------------------------------|:------:|:------------------:|:--------:|-----------------------------------------------------------------------------|:-------------------------:|
-| /api/klausur/klausurStatus   | `GET`  |       `none`       |  `none`  | Returns if the klausur is started                                           | `{klausurStatus:boolean}` |
-| /api/klausur/getBody         | `GET`  |       `none`       |  `none`  | Returns the body for the Klausur html                                       |      `<html></html>`      |
+| /api/klausur/klausurStatus   | `GET`  |       `none`       |  `none`  | Returns if the klausur is started (klausurID in session cookie)             | `{klausurStatus:boolean}` |
+| /api/klausur/getBody         | `GET`  |       `none`       |  `none`  | Returns the body for the Klausur html (klausurID in session cookie)         |      `<html></html>`      |
 | /api/klausur/upload          | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                                                         |          `none`           |
 | /api/klausur/getAllKlausuren | `POST` |       `none`       | `dozent` | Returns all Klausuren of the Dozent (requires DozentDBID in session cookie) |   `[file:KlausurJSON]`    |
 
 ### Klausur Data
-| URL                                           | METHOD |                 PARAMETER                  |   ROLE    | DESCR.                                         |            RETURN            |
-|-----------------------------------------------|:------:|:------------------------------------------:|:---------:|------------------------------------------------|:----------------------------:|
-| /api/klausurdata/saveKlausurData              | `POST` |               `form:Klausur`               | `student` | Sends and saves the filled out Klausur         |            `none`            |
-| /api/klausurdata/downloadKlausurData          | `POST` | `{klausurID:string,matrikelnummer:string}` | `dozent`  | Downloads a specific filled out Klausur        |    `file:Klausur as PDF`     |
-| /api/klausurdata/getKlausurData               | `POST` |            `{klausurID:string}`            | `dozent`  | Returns all filled out Klausuren for a Klausur |         `[Klausur]`          |
-| /api/klausurdata/checkIfStudentsPassedKlausur | `POST` | `{klausurID:string,matrikelnummer:string}` | `dozent`  | Checks if the Klausur was saved                | `{"Klausur wurde gefunden"}` |
+| URL                                           | METHOD |                  PARAMETER                  |   ROLE    | DESCR.                                         |            RETURN            |
+|-----------------------------------------------|:------:|:-------------------------------------------:|:---------:|------------------------------------------------|:----------------------------:|
+| /api/klausurdata/saveKlausurData              | `POST` |               `form:Klausur`                | `student` | Sends and saves the filled out Klausur         |            `none`            |
+| /api/klausurdata/downloadKlausurData          | `POST` | `{klausurID:string, matrikelnummer:string}` | `dozent`  | Downloads a specific filled out Klausur        |    `file:Klausur as PDF`     |
+| /api/klausurdata/getKlausurData               | `POST` |            `{klausurID:string}`             | `dozent`  | Returns all filled out Klausuren for a Klausur |         `[Klausur]`          |
+| /api/klausurdata/checkIfStudentsPassedKlausur | `POST` | `{klausurID:string, matrikelnummer:string}` | `dozent`  | Checks if the Klausur was saved                | `{"Klausur wurde gefunden"}` |
 
-### Data
-| URL                      | METHOD |               PARAMETER                |   ROLE    | DESCR.                                 |                    RETURN                     |
-|--------------------------|:------:|:--------------------------------------:|:---------:|----------------------------------------|:---------------------------------------------:|
-| /api/data/getAllStudents | `POST` |          `{klausurID:string}`          | `dozent`  | Returns all user only for this klausur |               `[{userSchema}]`                |
-| /api/data/addStudent     | `POST` | `{name:string, matrikelnummer:string}` | `student` | Adds a new student to klausur          | `{'Registrierung erfolgreich abgeschlossen'}` |
-| /api/data/deleteStudent  | `POST` | `{name:string, matrikelnummer:string}` | `student` | Deletes a student                      |        `{'User existiert nicht mehr'}`        |
+### User
+| URL                           | METHOD |                   PARAMETER                   |   ROLE    | DESCR.                                                      |                    RETURN                     |
+|-------------------------------|:------:|:---------------------------------------------:|:---------:|-------------------------------------------------------------|:---------------------------------------------:|
+| /api/user/getAllStudents      | `POST` |             `{klausurID:string}`              | `dozent`  | Returns all user only for this klausur                      |               `[{userSchema}]`                |
+| /api/user/getAllDozents       | `GET`  |                    `none`                     | `dozent`  | Returns all Dozents                                         |              `[{dozentSchema}]`               |
+| /api/user/addStudent          | `POST` |    `{name:string, matrikelnummer:string}`     | `student` | Adds a new student to klausur (klausurID in session cookie) | `{'Registrierung erfolgreich abgeschlossen'}` |
+| /api/user/deleteStudent       | `POST` |    `{name:string, matrikelnummer:string}`     | `student` | Deletes a student                                           |        `{'User existiert nicht mehr'}`        |
+| /api/user/addStudentKlausurID | `POST` |             `{klausurID:string}`              |  `none`   | Sets the klausurID in the session cookie                    |                    `none`                     |
+| /api/user/loginDozent         | `POST` |       `{mail:string, password:string}`        |  `none`   | Logs the Dozent in                                          |                    `none`                     |
+| /api/user/addDozent           | `POST` | `{mail:string, password:string, name:string}` | `dozent`  | Registers a new Dozent                                      | `{"Registrierung erfolgreich abgeschlossen"}` |
+| /api/userdeleteDozent         | `POST` |                `{mail:string}`                | `dozent`  | Deletes a Dozent account                                    |        `{"User existiert nicht mehr"}`        |
 
 ## Klausur JSON
 ```

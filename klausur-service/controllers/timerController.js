@@ -1,54 +1,35 @@
 const apiError = require('../errorHandl/apiError');
+const KlausurService = require('../Service/klausur.service')
 
-class TimerController {
+class TimerController{
 
-    constructor() {
-        this.timerStart = Date.now();
-        this.timerTime = 60 * 60 * 1000;
-
-        this.status = false;
-        this.finished = false;
-    }
-
-    setTime(m) {
-        this.timerTime = m * 60 * 1000;
-    }
-
-    startTimer() {
-        if (!this.status) {
-            this.status = true;
-            this.timerStart = Date.now();
-        }
-    }
-
-    addTime(m) {
-        this.timerTime += m * 60 * 1000;
-        if (m > 0) {
-            this.finished = false;
-        }
-    }
-
-    apiSetTimeMinutes(req, res) {
+    apiSetTimeMinutes = (req, res, next) => {
         try {
             const stunden = Number(req.body.stunden);
             const minuten = Number(req.body.minuten);
-            const time = this.convertTime(stunden, minuten);
+            const klausurID = req.body.klausurID
+
+            const timer = KlausurService.getOrSetTimer(klausurID)
+            const time = timer.convertTime(stunden, minuten);
             if (time) {
-                this.setTime(time);
+                timer.setTime(time);
                 res.sendStatus(200);
             } else {
-                res.sendStatus(400);
+                return next(apiError.badRequest('Minuten or Stunden are missing'))
             }
         } catch (_) {
             res.sendStatus(400);
         }
     }
 
-    apiSetTime(req, res) {
+    apiSetTime = (req, res) => {
         try {
             const time = Number(req.body.timerTime);
+            const klausurID = req.body.klausurID;
+
+            const timer = KlausurService.getOrSetTimer(klausurID);
             if (time) {
-                this.setTime(time);
+                timer.setTime(time);
                 res.sendStatus(200);
             } else {
                 res.sendStatus(400);
@@ -58,50 +39,68 @@ class TimerController {
         }
     }
 
-    apiStartTimer(req, res) {
-        this.startTimer();
+    apiStartTimer = (req, res) => {
+        const klausurID = req.body.klausurID;
+
+        const timer = KlausurService.getOrSetTimer(klausurID);
+        timer.startTimer();
         res.sendStatus(200);
     }
 
-    apiGetTime(req, res) {
-        if (!this.finished && this.status) {
+    apiGetTime = (req, res) => {
+        const klausurID = req.session.klausurID;
+
+        getTime(klausurID, res)
+    }
+
+    apiGetTimeDozent = (req, res) => {
+        const klausurID = req.body.klausurID;
+
+        this.getTime(klausurID, res)
+    }
+
+    getTime = (klausurID, res) => {
+        const timer = KlausurService.getOrSetTimer(klausurID);
+        if (!timer.finished && timer.status) {
             const tempNow = Date.now();
-            const tempStart = new Date(this.timerStart);
+            const tempStart = new Date(timer.timerStart);
 
             const tempDiff = new Date(tempNow - tempStart);
-            const timerRemain = new Date(this.timerTime - tempDiff);
+            const timerRemain = new Date(timer.timerTime - tempDiff);
             const timeOffset = new Date().getTimezoneOffset();
 
             if (timerRemain <= 0) {
-                this.finished = true;
+                timer.finished = true;
             }
-            res.send({timerRemain, timeOffset, status: this.status, finished: this.finished});
-        } else if (!this.finished) {
+            res.send({timerRemain, timeOffset, status: timer.status, finished: timer.finished});
+        } else if (!timer.finished) {
             const timeOffset = new Date().getTimezoneOffset();
-            res.send({timerRemain: this.timerTime, timeOffset, status: this.status, finished: this.finished});
+            res.send({timerRemain: timer.timerTime, timeOffset, status: timer.status, finished: timer.finished});
         } else {
-            this.status = false;
-            res.send({status: this.status, finished: this.finished});
+            timer.status = false;
+            res.send({status: timer.status, finished: timer.finished});
         }
     }
 
-    apiResetTimer(req, res) {
-        this.status = false;
+    apiResetTimer = (req, res) => {
+        const klausurID = req.body.klausurID;
+
+        const timer = KlausurService.getOrSetTimer(klausurID);
+        timer.status = false;
         res.sendStatus(200);
     }
 
-    apiAddTime(req, res) {
+    apiAddTime = (req, res) => {
         try {
             const time = Number(req.body.timerTime);
-            this.addTime(time);
+            const klausurID = req.body.klausurID;
+
+            const timer = KlausurService.getOrSetTimer(klausurID);
+            timer.addTime(time);
             res.sendStatus(200);
         } catch (_) {
             res.sendStatus(400);
         }
-    }
-
-    convertTime(stunden, minuten) {
-        return Number(stunden) * 60 + Number(minuten)
     }
 
 }

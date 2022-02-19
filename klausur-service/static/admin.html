@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- My CSS -->
+    <link rel="stylesheet" type="text/css" href="style/dashboardStyle.css">
+    <link rel="stylesheet" type="text/css" href="style/loginForm.css">
+    <!-- Bootstrap CSS -->
+    <link href="./style/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="./style/js/bootstrap.bundle.min.js"></script>
+
+    <title>Dashboard</title>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <button type="button" class="btn btn-primary" onclick="goToDashboard()">Zum Daschboard</button>
+        <a class="navbar-brand mb-0 h1" href="/index.html">HWR-online-klausuren</a>
+        <span></span>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary" onclick="toggleAddNewDozentDiv()">Neue Dozent Account Erstellen
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Mail</th>
+                    <th scope="col">Aktion</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="divloginForm" hidden>
+    <div class="container-fluid">
+        <div class="row FormRow">
+            <div class="col">
+                <form id="CreateDataForm" oninput='password2.setCustomValidity(password2.value != password.value ? "Passwords do not match." : "")'>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="dozentMailInput" type="email" placeholder="Mail" required>
+                        <label for="dozentMailInput">Mail</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="dozentNameInput" placeholder="Name" required>
+                        <label for="dozentNameInput">Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="dozentPasswordInput" type="password" placeholder="Password" name="password" required>
+                        <label for="dozentPasswordInput">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="dozentPasswordInputCheck" type="password" placeholder="Password" name="password2" required>
+                        <label for="dozentPasswordInput">Password</label>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="col LoginStatus">
+                <span id="CreateStatus"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary" onclick="toggleAddNewDozentDiv()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/adminFunktions/adminFunktions.js"></script>
+<script src="js/adminFunktions/addDozentAPI.js"></script>
+<script src="js/adminFunktions/getAllDozentsAPI.js"></script>
+<script src="js/adminFunktions/deleteDozentAPI.js"></script>
+</body>
+</html>

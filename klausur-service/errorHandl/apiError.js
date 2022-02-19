@@ -48,6 +48,10 @@ class ApiError extends Error{
         return new ApiError(500,message);
     };
 
+    static Unauthorized (message) {
+        return new ApiError(401,message);
+    };
+
 
 }
 

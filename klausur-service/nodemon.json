@@ -1,6 +1,8 @@
 {
   "ignore": ["klausuren/*", "static/*"],
   "env": {
-    "DB_URI": "mongodb://localhost:27017"
+    "DB_URI": "mongodb://localhost:27017",
+    "SESSION_SECRET": "safeandnoteasytoguesssecret",
+    "PDF_SERVICE_URI": "http://localhost:4000"
   }
 }

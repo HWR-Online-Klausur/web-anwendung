@@ -4,8 +4,21 @@ const mongoose = require('mongoose');
 const KlausurDataSchema = new mongoose.Schema({
     klausurID:{
         type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    titel:{
+        type: String,
         required: true,
-        ref: 'Klausur'
+        trim: true
+    },
+    modul:{
+        type: String,
+        trim: true,
+        required: true
+    },
+    dozent:{
+        type: String,
+        required: true,
     },
     name:{
         type: String,
@@ -58,3 +71,4 @@ const KlausurData = mongoose.model('KlausurData', KlausurDataSchema);
 
 //Export Model
 module.exports = KlausurData;
+

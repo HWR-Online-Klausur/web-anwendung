@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- My CSS -->
+    <link rel="stylesheet" type="text/css" href="style/dashboardStyle.css">
+    <!-- Bootstrap CSS -->
+    <link href="./style/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="./style/js/bootstrap.bundle.min.js"></script>
+
+    <title>Dashboard</title>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <button type="button" class="btn btn-primary" onclick="goToDashboard()">Zum Daschboard</button>
+        <a class="navbar-brand mb-0 h1" href="/index.html">HWR-online-klausuren</a>
+        <span>Zeit: <span id="timer-text-dozent"></span></span>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div id="divKlausurEinstellungeg" hidden>
+        <div class="row">
+            <div class="col uploadFormCol">
+                <form id="jsonKlausurForm">
+                    <div class="input-group">
+                        <input type="file" accept="application/json" class="form-control" id="jsonKlausur"
+                               name="jsonKlausur" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Upload
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col klausurUploadStatus">
+                <p id="status"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col klausurID">
+                <p id="klausurID"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col zeitFormcol">
+                Wählen sie die Zeit:
+                <br>
+                <form id="zeitKlausurForm">
+                    <label for="stunden">Stunden:</label>
+                    <input type="number" id="stunden" name="stunden" min="0" max="24" value="0">
+                    <label for="minuten">Minuten:</label>
+                    <input type="number" id="minuten" name="minuten" min="0" max="59" value="0">
+                    <br>
+                    <input type="submit" value="Zeit speichern">
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <label for="klausurStarten">Klausur Starten:</label>
+                    <button type="button" class="btn btn-primary" onclick="startTimer()" id="klausurStarten">Start
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row rowKlausurEinstellungenButton">
+        <button type="button" class="btn btn-outline-secondary" onclick="toggleKlausurEinstellungen()"
+                id="toggleKlausurEinstellungenButton">Klausur Einstellungen öffnen <img
+                src='style/icons/arrow-down-circle-fill.svg'></button>
+    </div>
+
+
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            Zeit während des Klausur steuern:
+            <br>
+            <form>
+                <label for="addtime-text">Add Time (min): </label>
+                <input type="number" id="addtime-text">
+                <button type="button" onclick="addTimer()">Add</button>
+                <br>
+                <label for="subtime-text">Substract Time (min): </label>
+                <input type="number" id="subtime-text">
+                <button type="button" onclick="subTimer()">Sub</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary float-end" onclick="getUsers()">Studentenliste aktualisieren</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Aktion</th>
+                </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/dashboardKlausurFunktions/dashboardKlausurFunktions.js"></script>
+<script src="js/dashboardKlausurFunktions/klausurUploadAPI.js"></script>
+<script src="js/dashboardKlausurFunktions/klausurSetTimeAPI.js"></script>
+<script src="js/dashboardKlausurFunktions/getUsersAPI.js"></script>
+<script src="js/dashboardKlausurFunktions/downloadKlausurDataAPI.js"></script>
+<script src="js/timerFunktions/timer.js"></script>
+</body>
+</html>

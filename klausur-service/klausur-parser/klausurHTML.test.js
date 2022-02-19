@@ -1,9 +1,11 @@
 const klausurHTML = require('./klausurHTML');
 const assert = require("assert");
 
+let kHTML = new klausurHTML();
+
 describe('klausurHTML: constructor',() => {
     test('the attribut KlausurHTML should be empty', () =>{
-        assert.deepEqual(klausurHTML,{
+        assert.deepEqual(kHTML,{
             KlausurHTML: []
         })
     });
@@ -12,15 +14,15 @@ describe('klausurHTML: constructor',() => {
 describe('klausurHTML: addKlausurHTML',() => {
     test('after we push our string to the klausurHTML attribut KlausurHTML should contain it', () =>{
         const stirng = `<div id="ab3-div"><p>Schreiben Sie einen sehr ausführlichen Aufsatz</p><textarea class="form-control" name="ab3"></textarea></div><hr>`;
-        klausurHTML.addKlausurHTML(stirng);
-        expect(klausurHTML.KlausurHTML).toContain(`<div id="ab3-div"><p>Schreiben Sie einen sehr ausführlichen Aufsatz</p><textarea class="form-control" name="ab3"></textarea></div><hr>`)
+        kHTML.addKlausurHTML(stirng);
+        expect(kHTML.KlausurHTML).toContain(`<div id="ab3-div"><p>Schreiben Sie einen sehr ausführlichen Aufsatz</p><textarea class="form-control" name="ab3"></textarea></div><hr>`)
     });
 
     test('after we push another one string to the klausurHTML attribut KlausurHTML should contain both of it', () =>{
         const stirng = `<div id="ab4-div"><p>Sind Sie ein Roboter?</p><input class="form-check-input" type="radio" id="ab3" name="ab4" value="Ja"><label class="form-check-label" for="ab3">Ja</label> <br> <input class="form-check-input" type="radio" id="ab3" name="ab4" value="Nein"><label class="form-check-label" for="ab3">Nein</label> <br></div><hr>`;
-        klausurHTML.addKlausurHTML(stirng);
-        expect(klausurHTML.KlausurHTML).toContain(`<div id="ab3-div"><p>Schreiben Sie einen sehr ausführlichen Aufsatz</p><textarea class="form-control" name="ab3"></textarea></div><hr>`)
-        expect(klausurHTML.KlausurHTML).toContain(`<div id="ab4-div"><p>Sind Sie ein Roboter?</p><input class="form-check-input" type="radio" id="ab3" name="ab4" value="Ja"><label class="form-check-label" for="ab3">Ja</label> <br> <input class="form-check-input" type="radio" id="ab3" name="ab4" value="Nein"><label class="form-check-label" for="ab3">Nein</label> <br></div><hr>`)
+        kHTML.addKlausurHTML(stirng);
+        expect(kHTML.KlausurHTML).toContain(`<div id="ab3-div"><p>Schreiben Sie einen sehr ausführlichen Aufsatz</p><textarea class="form-control" name="ab3"></textarea></div><hr>`)
+        expect(kHTML.KlausurHTML).toContain(`<div id="ab4-div"><p>Sind Sie ein Roboter?</p><input class="form-check-input" type="radio" id="ab3" name="ab4" value="Ja"><label class="form-check-label" for="ab3">Ja</label> <br> <input class="form-check-input" type="radio" id="ab3" name="ab4" value="Nein"><label class="form-check-label" for="ab3">Nein</label> <br></div><hr>`)
     });
 })
 
@@ -29,14 +31,14 @@ describe('klausurHTML: getKlausurHTML',() => {
         const result = [`<div id="ab3-div"><p>Schreiben Sie einen sehr ausführlichen Aufsatz</p><textarea class="form-control" name="ab3"></textarea></div><hr>`,
             `<div id="ab4-div"><p>Sind Sie ein Roboter?</p><input class="form-check-input" type="radio" id="ab3" name="ab4" value="Ja"><label class="form-check-label" for="ab3">Ja</label> <br> <input class="form-check-input" type="radio" id="ab3" name="ab4" value="Nein"><label class="form-check-label" for="ab3">Nein</label> <br></div><hr>`]
 
-        expect(klausurHTML.getKlausurHTML()).toEqual(result);
+        expect(kHTML.getKlausurHTML()).toEqual(result);
     });
 })
 
 describe('klausurHTML: clearKlausurHTML',() => {
     test('the attribut KlausurHTML should be empty', () =>{
-        klausurHTML.clearKlausurHTML();
-        assert.deepEqual(klausurHTML,{
+        kHTML.clearKlausurHTML();
+        assert.deepEqual(kHTML,{
             KlausurHTML: []
         })
     });
@@ -45,6 +47,7 @@ describe('klausurHTML: clearKlausurHTML',() => {
 describe('klausurHTML: aufgabenParse',() => {
     let obj
     obj = {
+        titel: "Test Titel",
         dozent: "Dr. Dev",
         modul: "IT-1234",
         aufgaben: [
@@ -69,15 +72,15 @@ describe('klausurHTML: aufgabenParse',() => {
         ]
     }
     test('the attribut KlausurHTML should be empty if we use non valid data', () =>{
-        klausurHTML.aufgabenParse(obj);
-        assert.deepEqual(klausurHTML,{
+        kHTML.aufgabenParse(obj);
+        assert.deepEqual(kHTML,{
             KlausurHTML: []
         })
     });
 
     test('the attribut KlausurHTML should not be empty if we use a valid data', () =>{
-        klausurHTML.aufgabenParse(obj.aufgaben);
-        assert.notDeepEqual(klausurHTML,{
+        kHTML.aufgabenParse(obj.aufgaben);
+        assert.notDeepEqual(kHTML,{
             KlausurHTML: []
         })
     });
@@ -89,7 +92,7 @@ describe('klausurHTML: aufgabenParse',() => {
             '<div id="ab4-div"><p>Sind Sie ein Roboter?</p><input class="form-check-input" type="radio" id="ab4-0" name="ab4" value="Ja"><label class="form-check-label" for="ab4-0">Ja</label> <br><input class="form-check-input" type="radio" id="ab4-1" name="ab4" value="Nein"><label class="form-check-label" for="ab4-1">Nein</label> <br></div><hr>'
         ]
 
-        klausurHTML.aufgabenParse(obj.aufgaben);
-        expect(klausurHTML.getKlausurHTML()).toEqual(result)
+        kHTML.aufgabenParse(obj.aufgaben);
+        expect(kHTML.getKlausurHTML()).toEqual(result)
     });
 })

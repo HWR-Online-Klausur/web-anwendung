@@ -6,13 +6,20 @@
   "scripts": {
     "test": "jest",
     "start": "node index.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "api-test": "newman run Postman/Web_Anwendung_API_Test.postman_collection.json",
+    "e2e:open": "cypress open",
+    "e2e:run": "cypress run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.25.0",
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "moment": "^2.29.1",
     "moment-es6": "^1.0.0",
     "mongoose": "^5.13.7",
@@ -20,7 +27,14 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "cypress": "^9.5.0",
     "jest": "^27.3.1",
+    "newman": "^5.3.1",
     "nodemon": "^2.0.15"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "<rootDir>/e2e/"
+    ]
   }
 }

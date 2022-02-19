@@ -22,9 +22,12 @@
 | /api/klausur/getAllKlausuren | `POST` |       `none`       | `dozent` | Returns all Klausuren of the Dozent (requires DozentDBID in session cookie) |   `[file:KlausurJSON]`    |
 
 ### Klausur Data
-| URL                              | METHOD |   PARAMETER    |   ROLE    | DESCR.                       | RETURN |
-|----------------------------------|:------:|:--------------:|:---------:|------------------------------|:------:|
-| /api/klausurdata/saveKlausurData | `POST` | `form:Klausur` | `student` | Sends the filled out Klausur | `none` |
+| URL                                           | METHOD |                 PARAMETER                  |   ROLE    | DESCR.                                         |            RETURN            |
+|-----------------------------------------------|:------:|:------------------------------------------:|:---------:|------------------------------------------------|:----------------------------:|
+| /api/klausurdata/saveKlausurData              | `POST` |               `form:Klausur`               | `student` | Sends and saves the filled out Klausur         |            `none`            |
+| /api/klausurdata/downloadKlausurData          | `POST` | `{klausurID:string,matrikelnummer:string}` | `dozent`  | Downloads a specific filled out Klausur        |    `file:Klausur as PDF`     |
+| /api/klausurdata/getKlausurData               | `POST` |            `{klausurID:string}`            | `dozent`  | Returns all filled out Klausuren for a Klausur |         `[Klausur]`          |
+| /api/klausurdata/checkIfStudentsPassedKlausur | `POST` | `{klausurID:string,matrikelnummer:string}` | `dozent`  | Checks if the Klausur was saved                | `{"Klausur wurde gefunden"}` |
 
 ### Data
 | URL                      | METHOD |               PARAMETER                |   ROLE    | DESCR.                                 |                    RETURN                     |

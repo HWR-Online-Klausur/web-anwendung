@@ -2,11 +2,13 @@ class klausur {
 
     constructor(pKlausur) {
         if (pKlausur) {
+            this.id = pKlausur._id;
             this.titel = pKlausur.titel;
             this.dozent = pKlausur.dozent;
             this.modul = pKlausur.modul;
             this.aufgaben = [...pKlausur.aufgaben];
         } else {
+            this.id = "";
             this.titel = "";
             this.dozent = "";
             this.modul = "";
@@ -16,7 +18,8 @@ class klausur {
 
     setKlausur(pKlausur) {
         if (pKlausur) {
-            this.titel = pKlausur.titel
+            this.id = pKlausur.id;
+            this.titel = pKlausur.titel;
             this.dozent = pKlausur.dozent;
             this.modul = pKlausur.modul;
 
@@ -47,6 +50,10 @@ class klausur {
 
     getTitel() {
         return this.titel;
+    }
+
+    getID() {
+        return this.id;
     }
 }
 

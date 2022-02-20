@@ -6,6 +6,7 @@ let k = new klausur();
 describe('klausur: constructor',() => {
     test('the attributes dozent, modul, aufgaben and titel should be empty', () =>{
         assert.deepEqual(k,{
+            id: "",
             titel: "",
             dozent: "",
             modul: "",
@@ -17,6 +18,7 @@ describe('klausur: constructor',() => {
 describe('klausur: getKlausur empty',() => {
     test('the attributes dozent, modul, aufgaben and titel should be empty', () =>{
         const result = {
+            "id": "",
             "titel": "",
             "dozent": "",
             "modul": "",

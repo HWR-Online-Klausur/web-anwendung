@@ -18,7 +18,8 @@
 |------------------------------|:------:|:------------------:|:--------:|-----------------------------------------------------------------------------|:-------------------------:|
 | /api/klausur/klausurStatus   | `GET`  |       `none`       |  `none`  | Returns if the klausur is started (klausurID in session cookie)             | `{klausurStatus:boolean}` |
 | /api/klausur/getBody         | `GET`  |       `none`       |  `none`  | Returns the body for the Klausur html (klausurID in session cookie)         |      `<html></html>`      |
-| /api/klausur/upload          | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                                                         |          `none`           |
+| /api/klausur/upload          | `POST` |    `{klausur}`     | `dozent` | Uploads the Klausur                                                         |          `none`           |
+| /api/klausur/upload/form     | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                                                         |          `none`           |
 | /api/klausur/getAllKlausuren | `POST` |       `none`       | `dozent` | Returns all Klausuren of the Dozent (requires DozentDBID in session cookie) |   `[file:KlausurJSON]`    |
 
 ### Klausur Data
@@ -38,6 +39,7 @@
 | /api/user/deleteStudent       | `POST` |    `{name:string, matrikelnummer:string}`     | `student` | Deletes a student                                           |        `{'User existiert nicht mehr'}`        |
 | /api/user/addStudentKlausurID | `POST` |             `{klausurID:string}`              |  `none`   | Sets the klausurID in the session cookie                    |                    `none`                     |
 | /api/user/loginDozent         | `POST` |       `{mail:string, password:string}`        |  `none`   | Logs the Dozent in                                          |                    `none`                     |
+| /api/user/logout              | `GET`  |                    `none`                     | `dozent`  | Logs the user out                                           |                    `none`                     |
 | /api/user/addDozent           | `POST` | `{mail:string, password:string, name:string}` | `dozent`  | Registers a new Dozent                                      | `{"Registrierung erfolgreich abgeschlossen"}` |
 | /api/userdeleteDozent         | `POST` |                `{mail:string}`                | `dozent`  | Deletes a Dozent account                                    |        `{"User existiert nicht mehr"}`        |
 

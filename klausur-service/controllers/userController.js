@@ -219,6 +219,11 @@ class UserController {
 
     }
 
+    async logoutDozent(req, res) {
+        req.session.destroy()
+        res.sendStatus(200);
+    }
+
     async CheckDozentID(req, res, next){
         if (req.session && req.session.DozentID){
             await Dozent.findOne({

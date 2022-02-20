@@ -38,6 +38,7 @@
 | /api/user/deleteStudent       | `POST` |    `{name:string, matrikelnummer:string}`     | `student` | Deletes a student                                           |        `{'User existiert nicht mehr'}`        |
 | /api/user/addStudentKlausurID | `POST` |             `{klausurID:string}`              |  `none`   | Sets the klausurID in the session cookie                    |                    `none`                     |
 | /api/user/loginDozent         | `POST` |       `{mail:string, password:string}`        |  `none`   | Logs the Dozent in                                          |                    `none`                     |
+| /api/user/logout              | `GET`  |                    `none`                     | `dozent`  | Logs the user out                                           |                    `none`                     |
 | /api/user/addDozent           | `POST` | `{mail:string, password:string, name:string}` | `dozent`  | Registers a new Dozent                                      | `{"Registrierung erfolgreich abgeschlossen"}` |
 | /api/userdeleteDozent         | `POST` |                `{mail:string}`                | `dozent`  | Deletes a Dozent account                                    |        `{"User existiert nicht mehr"}`        |
 

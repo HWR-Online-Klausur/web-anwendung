@@ -75,3 +75,7 @@
   ]
 }
 ```
+
+## ID der Klausur
+
+Wenn die Klausur mittels /api/klausur/getAllKlausuren erhalten wird, dann ist die ID der Klausur in `_id`

@@ -18,7 +18,8 @@
 |------------------------------|:------:|:------------------:|:--------:|-----------------------------------------------------------------------------|:-------------------------:|
 | /api/klausur/klausurStatus   | `GET`  |       `none`       |  `none`  | Returns if the klausur is started (klausurID in session cookie)             | `{klausurStatus:boolean}` |
 | /api/klausur/getBody         | `GET`  |       `none`       |  `none`  | Returns the body for the Klausur html (klausurID in session cookie)         |      `<html></html>`      |
-| /api/klausur/upload          | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                                                         |          `none`           |
+| /api/klausur/upload          | `POST` |    `{klausur}`     | `dozent` | Uploads the Klausur                                                         |          `none`           |
+| /api/klausur/upload/form     | `POST` | `file:KlausurJSON` | `dozent` | Uploads the Klausur                                                         |          `none`           |
 | /api/klausur/getAllKlausuren | `POST` |       `none`       | `dozent` | Returns all Klausuren of the Dozent (requires DozentDBID in session cookie) |   `[file:KlausurJSON]`    |
 
 ### Klausur Data

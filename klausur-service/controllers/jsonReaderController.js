@@ -47,8 +47,7 @@ function jsonDelete(path) {
 
 
 //Stellt sicher, dass Ordner "klausuren" da ist. Wenn nicht - erstellt es.
-function checkFolder(req, res, next)
-{
+function checkFolder(req, res, next) {
     fs.stat('./klausuren', function (err) {
         if (!err) {
             next()
@@ -60,8 +59,7 @@ function checkFolder(req, res, next)
 }
 
 
-function uploadJSON(req, res, next)
-{
+function uploadJSONForm(req, res, next) {
     upload(req, res, async function (err) {
         let filedata = req.file;
         if (filedata === undefined) {
@@ -72,27 +70,58 @@ function uploadJSON(req, res, next)
             const k = jsonRead(path);
             jsonDelete(path);
 
-            await new Klausur({
-                'titel': k.getTitel(),
-                'modul': k.getModul(),
-                'dozent': req.session.DozentDBID,
-                'aufgaben': k.getAufgaben()
-            }).save().then(kDB => {
-                const id = kDB._id
-                KlausurService.setKlausur(id, k)
-                KlausurService.createTimer(id)
-                res.send({klausurID: id})
-            }).catch((e) => {
-                console.log(e)
-                next(apiError.unprocessableEntity('Something went wrong while saving the klausur'))
-            })
+            await saveKlausur(k, req, res, next)
         }
-
     })
 }
 
+async function uploadJSON(req, res, next) {
+    let klausurJSON;
+
+    try {
+        klausurJSON = req.body
+    } catch (_) {
+        return next(apiError.badRequest('Etwas ist schief gelaufen. Bitte versuche es erneut'));
+    }
+
+    if (klausurJSON) {
+        const k = new klausur(klausurJSON);
+        await saveKlausur(k, req, res, next);
+    } else {
+        return next(apiError.badRequest('Etwas ist schief gelaufen. Bitte versuche es erneut'));
+    }
+}
+
+async function saveKlausur(klausur, req, res, next) {
+    if (klausur.getID()) {
+        await Klausur.findOneAndUpdate({
+            _id: klausur.getID()
+        }, {
+            'titel': klausur.getTitel(),
+            'modul': klausur.getModul(),
+            'dozent': req.session.DozentDBID,
+            'aufgaben': klausur.getAufgaben()
+        }).then(() => res.sendStatus(200))
+            .catch(() => next(apiError.unprocessableEntity('Something went wrong while saving the klausur')))
+    } else {
+        await new Klausur({
+            'titel': klausur.getTitel(),
+            'modul': klausur.getModul(),
+            'dozent': req.session.DozentDBID,
+            'aufgaben': klausur.getAufgaben()
+        }).save().then(kDB => {
+            const id = kDB._id
+            KlausurService.setKlausur(id, k)
+            KlausurService.createTimer(id)
+            res.send({klausurID: id})
+        }).catch(() => {
+            next(apiError.unprocessableEntity('Something went wrong while saving the klausur'))
+        })
+    }
+}
 
 module.exports = {
     checkFolder,
-    uploadJSON
+    uploadJSON,
+    uploadJSONForm
 }

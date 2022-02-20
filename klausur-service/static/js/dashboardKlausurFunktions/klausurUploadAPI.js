@@ -8,7 +8,7 @@ jsonKlausurForm.addEventListener('submit', function (e) {
     const formData = new FormData();
     formData.append('jsonKlausur', input.files[0]);
 
-    fetch('/api/klausur/upload', {
+    fetch('/api/klausur/upload/form', {
         method: 'POST',
         body: formData
     })
